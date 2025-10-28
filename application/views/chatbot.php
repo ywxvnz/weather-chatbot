@@ -1,16 +1,17 @@
-<div class="chatbot-wrapper d-flex align-items-center justify-content-center">
-  <div class="container chatbot-container py-5">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<div class="chatbot-container">
     <!-- Top Info Row -->
     <div class="row align-items-center mb-4 text-center text-md-start">
-      <div class="col-md-8 mb-2 mb-md-0">
-        <span class="me-2">📍 <?= $location ?></span>
+      <div class="col-md-7 mb-2 mb-md-0">
+        <span class="me-2"><?= $location ?></span>
         <span class="me-2"><?= $temperature ?></span>
         <span><?= $condition ?></span>
       </div>
-      <div class="col-md-4 d-flex justify-content-center justify-content-md-end">
-        <div class="input-group input-group-sm" style="max-width: 200px;">
-          <input type="text" class="form-control rounded-pill" id="searchInput" placeholder="Search...">
-          <button class="btn btn-outline-secondary rounded-pill ms-2" id="searchBtn">🔍</button>
+      <div class="col-md-5 d-flex justify-content-center justify-content-md-end">
+        <div class="chatbot-search-box">
+            <i class="fas fa-search chatbot-search-icon"></i>
+            <input type="text" id="locationSearch" placeholder="     Search for a location...">
+            <i class="fas fa-map-marker-alt chatbot-location-icon"></i>
         </div>
       </div>
     </div>
@@ -23,14 +24,21 @@
       </div>
     </div>
 
-    <!-- Message Input -->
+    <div class="chat-section">
+        <div class="chat-input-container">
+            <input type="text" class="form-control" id="userMessage" placeholder="Type your message here...">
+            <button class="send-button" id="sendBtn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Message Input 
     <div class="chat-input d-flex justify-content-center align-items-center mt-4">
       <input type="text" class="form-control rounded-pill me-2" id="userMessage" placeholder="Type your message..." />
       <button class="btn btn-primary rounded-circle" id="sendBtn">➤</button>
-    </div>
-  </div>
+    </div>-->
 </div>
-
 <script>
 const chatArea = document.getElementById('chatArea');
 const greetingSection = document.getElementById('greetingSection');
