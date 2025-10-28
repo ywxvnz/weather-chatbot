@@ -85,3 +85,47 @@ html, body {
         font-size: 1.1rem;
     }
 }
+
+/* Chat area (scrollable messages) */
+#chatArea {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+/* Chat bubbles */
+.chat-bubble {
+  max-width: 75%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  line-height: 1.4;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: #b7d2e8;
+  color: #333;
+  border-radius: 15px 15px 0 15px;
+}
+
+.chat-bubble.system {
+  align-self: flex-start;
+  background: #c6c6c6;
+  color: #fff;
+  border-radius: 15px 15px 15px 0;
+}
+
+/* Smooth scrolling */
+#chatArea {
+  scroll-behavior: smooth;
+}
+
+/* Keep input fixed spacing on small screens */
+.chat-input {
+  margin-top: 20px;
+}
