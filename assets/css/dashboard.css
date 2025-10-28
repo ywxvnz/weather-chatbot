@@ -1,0 +1,11 @@
+
+.dashboard-page {
+	background-color: #ccdee6;
+	min-height: calc(100vh - 70px);
+	padding: 2rem 1rem;
+}
+
+.dashboard-page .bg-light {
+	background-color: #ffffff !important;
+}
+
