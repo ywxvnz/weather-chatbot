@@ -13,6 +13,7 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/chatbot.css'); ?>">
 </head>
 <body>
 
