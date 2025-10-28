@@ -18,6 +18,6 @@ class MY_Controller extends CI_Controller {
     protected function render($view, $data = []) {
         $this->load->view('templates/header', $data);
         $this->load->view($view, $data);
-        $this->load->view('templates/footer', $data);
+        $this->load->view('templates/footer', $data);   
     }
 }
