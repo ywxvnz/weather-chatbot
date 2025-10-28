@@ -1,7 +1,26 @@
-<style>body{background-color:#ccdee6;}</style>
-<div class="text-center p-5 bg-light rounded shadow-sm">
-  <h1 class="fw-bold text-primary mb-3">Welcome to Weather Chatbot Dashboard</h1>
-  <p class="text-muted">This is a blank page template for your team to start building from.</p>
-  <hr class="my-4">
-  <p>You can begin adding cards, chatbot UI, or weather widgets here later.</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<div class="dashboard-container">
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="locationSearch" placeholder="Search for a location...">
+            <i class="fas fa-map-marker-alt location-icon"></i>
+        </div>
+    </div>
+    
+    <div class="weather-info">
+        <h1 class="location-name">London</h1>
+        <div class="temperature">21°C</div>
+        <div class="weather-condition">Partly Cloudy</div>
+    </div>
+
+    <div class="conversation-starter">
+        <p>Start a conversation about the weather...</p>
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" placeholder="Type your message here...">
+            <button class="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
 </div>
