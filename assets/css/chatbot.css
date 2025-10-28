@@ -1,0 +1,87 @@
+/* 🌤 Full-page background gradient */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #fffaf3 0%, #f8e9d6 100%);
+    background-attachment: fixed;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Wrapper centers everything */
+.chatbot-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* 🌫️ Glassmorphism Chat Container */
+.chatbot-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 40px 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #333;
+}
+
+/* Avatar circle */
+.avatar-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+/* Greeting text */
+.chat-greeting {
+    font-size: 1.3rem;
+    color: #3e3e3e;
+    font-weight: 500;
+}
+
+/* Input field */
+.chat-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+/* Send button */
+.chat-input button {
+    background-color: #e6b980;
+    border: none;
+    padding: 10px 15px;
+    transition: background-color 0.2s;
+}
+
+.chat-input button:hover {
+    background-color: #d49c6e;
+}
+
+/* Responsive design */
+@media (max-width: 576px) {
+    .chatbot-container {
+        padding: 25px;
+    }
+
+    .avatar-placeholder {
+        width: 90px;
+        height: 90px;
+    }
+
+    .chat-greeting {
+        font-size: 1.1rem;
+    }
+}
