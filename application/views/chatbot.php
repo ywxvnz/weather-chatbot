@@ -53,10 +53,41 @@ function addMessage(content, type) {
     chatArea.scrollTop = chatArea.scrollHeight;
 }
 
-function simulateResponse(userMsg) {
-    setTimeout(() => {
-        addMessage("You said: " + userMsg, 'system');
-    }, 800);
+async function simulateResponse(userMsg) {
+    // Show typing indicator
+    const typingBubble = document.createElement('div');
+    typingBubble.classList.add('chat-bubble', 'system');
+    typingBubble.textContent = "Thinking...";
+    chatArea.appendChild(typingBubble);
+    chatArea.scrollTop = chatArea.scrollHeight;
+
+    try {
+        const response = await fetch("http://localhost:5000/api/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: userMsg })
+        });
+
+        typingBubble.remove(); // remove "Thinking..." bubble
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            addMessage("Error: " + (errorData.error || "Server error"), 'system');
+            return;
+        }
+
+        const data = await response.json();
+        if (data.reply) {
+            addMessage(data.reply, 'system');
+        } else {
+            addMessage("No reply from chatbot.", 'system');
+        }
+    } catch (error) {
+        typingBubble.remove();
+        addMessage("Network error: " + error.message, 'system');
+    }
 }
 
 function sendMessage() {
