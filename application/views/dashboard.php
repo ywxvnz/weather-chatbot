@@ -9,9 +9,9 @@
     </div>
     
     <div class="weather-info">
-        <h1 class="location-name">London</h1>
-        <div class="temperature">21°C</div>
-        <div class="weather-condition">Partly Cloudy</div>
+        <h1 class="location-name"><?= $location ?></h1>
+        <div class="temperature"><?= $temperature ?></div>
+        <div class="weather-condition"><?= $condition ?></div>
     </div>
 
     <div class="chat-section">
