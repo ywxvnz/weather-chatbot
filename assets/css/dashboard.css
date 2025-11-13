@@ -188,3 +188,64 @@ html, body {
     }
 }
 
+/* Autosuggest dropdown */
+.search-box {
+    z-index: 100;
+    position: relative;
+}
+
+.suggestions-list {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1200;
+    padding: 4px 0;
+    margin: 0;
+    list-style: none;
+}
+
+.suggestion-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    color: #1c234f;
+    font-size: 0.95rem;
+    transition: background-color 0.1s ease;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f4f8;
+}
+
+.suggestion-item.active,
+.suggestion-item[aria-selected="true"] {
+    background-color: #e8f1f7;
+}
+
+/* Hide suggestions when using d-none bootstrap class */
+.suggestions-list.d-none {
+    display: none !important;
+}
+
+@media (max-width: 576px) {
+    .suggestions-list {
+        max-height: 250px;
+        border-radius: 8px;
+    }
+
+    .suggestion-item {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+}
+
