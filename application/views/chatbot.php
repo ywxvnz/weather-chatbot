@@ -2,9 +2,8 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/dashboard.css') ?>">
 
 <div class="chatbot-container">
-    <!-- Top Info Row -->
-    <div class="row align-items-center mb-4 text-center text-md-start">
-        <div class="col-md-7 mb-2 mb-md-0">
+    <div class="top-bar">
+        <div class="col-md-6 mb-2 mb-md-0">
             <div class="chatbot-weather-info">
                 <span class="me-2 fw-bold" style="color: #1c234f;" id="locationDisplay">Loading...</span>
                 <span class="me-2" style="color: #1a73e8;" id="temperatureDisplay">--°</span>
@@ -12,7 +11,7 @@
             </div>
         </div>
 
-        <div class="col-md-5 d-flex justify-content-center justify-content-md-end">
+        <div class="col-md-6 d-flex justify-content-center justify-content-md-end">
             <div class="chatbot-search-section">
                 <div class="chatbot-search-box">
                     <i class="fas fa-search search-icon"></i>
@@ -33,7 +32,7 @@
         <div class="avatar-wrapper mx-auto mb-3">
           <img src="<?= base_url('assets/icons/avatar.png') ?>" alt="Chatbot Logo" class="avatar-logo">
         </div>
-        <h5 class="chat-greeting"><?= $greeting ?></h5>
+        <h5 class="chat-greeting" style="color:#555;"><?= $greeting ?></h5>
       </div>
     </div>
 

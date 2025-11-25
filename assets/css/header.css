@@ -4,11 +4,12 @@ html, body {
 }
 
 .custom-navbar {
-	background: transparent !important;
-	box-shadow: none;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 	margin-top: 0 !important;
-	padding-top: 1rem;
-	padding-bottom: 1rem;
 }
 
 @media (max-width: 991.98px) {

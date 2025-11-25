@@ -1,7 +1,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #ccdee6;
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
 }
@@ -14,8 +13,17 @@ html, body {
     width: 90%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 2rem 2.5rem;
+    padding: 1rem 2.5rem;
 }
+
+.top-bar {
+    display: flex;
+    align-items: center;       /* vertically aligned */
+    justify-content: space-between; /* spread them left & right */
+    width: 100%;
+    margin-bottom: 20px;
+}
+
 
 /* Common Glass Variables */
 :root {
@@ -94,10 +102,17 @@ html, body {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
+.chatbot-weather-info {
+    display: flex;
+    align-items: center;      /* vertically center text inside the container */
+    gap: 0.5rem;              /* space between temp, location, condition */
+    line-height: 1;           /* prevent extra height from line spacing */
+    padding: 0;               /* remove extra padding */
+}
+
 .chatbot-search-section {
     width: 100%;
     max-width: 600px;
-    margin-bottom: 2rem;
     padding: 0 1rem;
 }
 
@@ -108,7 +123,7 @@ html, body {
 
 .chatbot-search-box input {
     width: 100%;
-    padding: 18px 50px;
+    padding: 6px 45px;
     border: none;
     border-radius: 30px;
 
