@@ -10,11 +10,16 @@
             <span id="conditionDisplay">--</span>
         </div>
         <div class="col-md-5 d-flex justify-content-center justify-content-md-end">
-            <div class="chatbot-search-box">
-                <i class="fas fa-search chatbot-search-icon"></i>
-                <input type="text" id="locationSearch" placeholder="     Search for a location..." autocomplete="off" aria-autocomplete="list" aria-controls="suggestions" aria-expanded="false">
-                <ul id="suggestions" class="suggestions-list d-none" role="listbox" aria-label="Search suggestions"></ul>
-                <i class="fas fa-map-marker-alt chatbot-location-icon"></i>
+            <div class="search-section">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="locationSearch" placeholder="Search for a location..." autocomplete="off" aria-autocomplete="list" aria-controls="suggestions" aria-expanded="false">
+
+                    <!-- Autosuggest dropdown -->
+                    <ul id="suggestions" class="suggestions-list d-none" role="listbox" aria-label="Search suggestions"></ul>
+
+                    <i class="fas fa-map-marker-alt location-icon"></i>
+                </div>
             </div>
         </div>
     </div>
