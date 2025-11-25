@@ -5,10 +5,13 @@
     <!-- Top Info Row -->
     <div class="row align-items-center mb-4 text-center text-md-start">
         <div class="col-md-7 mb-2 mb-md-0">
-            <span class="me-2" id="locationDisplay">Loading...</span>
-            <span class="me-2" id="temperatureDisplay">--°</span>
-            <span id="conditionDisplay">--</span>
+            <div class="chatbot-weather-info">
+                <span class="me-2 fw-bold" style="color: #1c234f;" id="locationDisplay">Loading...</span>
+                <span class="me-2" style="color: #1a73e8;" id="temperatureDisplay">--°</span>
+                <span class="me-2" style="color: #555;" id="conditionDisplay">--</span>
+            </div>
         </div>
+
         <div class="col-md-5 d-flex justify-content-center justify-content-md-end">
             <div class="chatbot-search-section">
                 <div class="chatbot-search-box">
