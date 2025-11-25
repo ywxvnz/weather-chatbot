@@ -94,19 +94,19 @@ html, body {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
-.search-section {
+.chatbot-search-section {
     width: 100%;
     max-width: 600px;
     margin-bottom: 2rem;
     padding: 0 1rem;
 }
 
-.search-box {
+.chatbot-search-box {
     position: relative;
     width: 100%;
 }
 
-.search-box input {
+.chatbot-search-box input {
     width: 100%;
     padding: 18px 50px;
     border: none;
@@ -123,7 +123,7 @@ html, body {
     transition: all 0.3s ease;
 }
 
-.search-box input:focus {
+.chatbot-search-box input:focus {
     outline: none;
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(14px);

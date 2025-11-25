@@ -10,8 +10,8 @@
             <span id="conditionDisplay">--</span>
         </div>
         <div class="col-md-5 d-flex justify-content-center justify-content-md-end">
-            <div class="search-section">
-                <div class="search-box">
+            <div class="chatbot-search-section">
+                <div class="chatbot-search-box">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="locationSearch" placeholder="Search for a location..." autocomplete="off" aria-autocomplete="list" aria-controls="suggestions" aria-expanded="false">
 
@@ -325,7 +325,7 @@ if (searchInput) {
     });
 }
 
-const locationIcon = document.querySelector('.chatbot-location-icon');
+const locationIcon = document.querySelector('.location-icon');
 if (locationIcon) {
     locationIcon.addEventListener('click', function () {
         if (!navigator.geolocation) {
