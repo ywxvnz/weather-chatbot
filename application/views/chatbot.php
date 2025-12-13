@@ -113,30 +113,13 @@ async function simulateResponse(userMsg) {
     chatArea.appendChild(typingBubble);
     chatArea.scrollTop = chatArea.scrollHeight;
 
-    // include selected widget location (if any) to provide default context to backend
-    let payload = { message: userMsg };
-    try {
-        const stored = localStorage.getItem('selectedLocation');
-        if (stored) {
-            const loc = JSON.parse(stored);
-            // normalize property names lat/longitude
-            payload.location = {
-                name: loc.name || loc.display_name || loc.loc || null,
-                latitude: loc.latitude || loc.lat || null,
-                longitude: loc.longitude || loc.lon || null
-            };
-        }
-    } catch (err) {
-        // ignore parse errors
-    }
-
     try {
         const response = await fetch("http://localhost:5000/api/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({ message: userMsg })
         });
 
         typingBubble.remove(); // remove "Thinking..." bubble

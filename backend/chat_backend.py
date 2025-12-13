@@ -20,7 +20,6 @@ client = OpenAI(
 conversation_history = []
 max_tokens_limit = 4000  # adjust based on your model
 summary_context = ""      # long-term memory
-current_location = None  # NEW: conversation-level last-used location
 
 # ------------------------------------------------------------
 # Function: Send a chat completion request to Gemini
@@ -68,37 +67,11 @@ def add_message(role, content):
     if approx_tokens > max_tokens_limit * 0.8:  # near limit
         summarize_history()
 
-def set_current_location(lat, lon, name=None):
-    """
-    Update the conversation-level location context.
-    """
-    global current_location
-    try:
-        lat = float(lat)
-        lon = float(lon)
-    except Exception:
-        return
-    current_location = {"name": name or f"{lat:.6f},{lon:.6f}", "latitude": lat, "longitude": lon}
-    # Record as a system message so the assistant sees it in context
-    add_message("system", f"Current conversation location set to: {current_location['name']} (lat: {lat}, lon: {lon})")
-
 # ------------------------------------------------------------
 # Chatbot interface
 # ------------------------------------------------------------
-def chatbot_reply(user_input, location=None):
-    global summary_context, current_location
-
-    # If caller supplied a location (from widget/localStorage), and this is a fresh conversation,
-    # set it as the initial conversation location.
-    if location and not conversation_history:
-        try:
-            lat = location.get("latitude") or location.get("lat")
-            lon = location.get("longitude") or location.get("lon")
-            name = location.get("name") or location.get("display_name") or location.get("loc")
-            if lat is not None and lon is not None:
-                set_current_location(lat, lon, name=name)
-        except Exception:
-            pass
+def chatbot_reply(user_input):
+    global summary_context
 
     add_message("user", user_input)
 
@@ -119,16 +92,6 @@ def chatbot_reply(user_input, location=None):
     messages.append({"role": "system", "content": system_intro})
     if summary_context:
         messages.append({"role": "system", "content": f"Long-term memory summary:\n{summary_context}"})
-    # NEW: if we have a conversation-level location, tell the assistant to use it as the default
-    if current_location:
-        messages.append({
-            "role": "system",
-            "content": (
-                f"Conversation default location: {current_location['name']} "
-                f"(latitude: {current_location['latitude']}, longitude: {current_location['longitude']}). "
-                "If the user does not explicitly mention a different location, assume this location for weather queries."
-            )
-        })
     messages.extend(conversation_history)
 
     def filter_valid_messages(msgs):
@@ -174,8 +137,7 @@ def chatbot_reply(user_input, location=None):
             tool_name = reply_json["tool"]
             arguments = json.dumps(reply_json.get("arguments", {}))
             tool_result = tools_router(tool_name, arguments)
-            add_message("system", f"Tool '{tool_name}' output:\n{tool_result}")
-            # If the tool result included location info, tools_router should have updated current_location already.
+            add_message("tool", tool_result)
             format_prompt = messages.copy()
             format_prompt.append({
                 "role": "user",
@@ -188,10 +150,10 @@ def chatbot_reply(user_input, location=None):
             formatted_reply = make_gemini_request(format_prompt)
             add_message("assistant", formatted_reply)
             return formatted_reply
+            #return f"(Tool called: {tool_name})\n{formatted_reply}"
         elif tool_check_reply.strip().lower() == "none":
             pass
     except Exception:
-        # not a JSON reply or parse failed -> treat as no-tool selection and let assistant generate free-form reply
         pass
 
     assistant_reply = make_gemini_request(messages)
@@ -260,28 +222,22 @@ tools_list = {
 }
 
 # ------------------------------------------------------------
-# Tools Router (modified resolve_location to return name and update conversation location)
+# Tools Router (Weather only)
 # ------------------------------------------------------------
 def tools_router(tool, message):
     import requests
-    global current_location
     try:
         args = json.loads(message) if message else {}
+        print(f"[tools_router] Parsed args: {args}")
     except Exception as e:
-        return json.dumps({"error": f"Error parsing arguments: {e}"})
+        return f"Error parsing arguments: {e}"
 
     def resolve_location(args):
-        """
-        Returns (lat, lon, name) or (None, None, None)
-        """
-        lat = args.get("latitude") or args.get("lat")
-        lon = args.get("longitude") or args.get("lon")
+        lat = args.get("latitude")
+        lon = args.get("longitude")
         city = args.get("city")
         if lat is not None and lon is not None:
-            try:
-                return float(lat), float(lon), args.get("name") or city or f"{lat},{lon}"
-            except Exception:
-                return None, None, None
+            return lat, lon
         elif city:
             geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
             try:
@@ -290,46 +246,41 @@ def tools_router(tool, message):
                 if data.get("results"):
                     lat = data["results"][0]["latitude"]
                     lon = data["results"][0]["longitude"]
-                    name = data["results"][0].get("name") or city
-                    return lat, lon, name
+                    return lat, lon
             except Exception:
-                return None, None, None
-        return None, None, None
+                return None, None
+        return None, None
 
     if tool == "get_current_weather":
-        lat, lon, name = resolve_location(args)
+        lat, lon = resolve_location(args)
         if lat is None or lon is None:
             return json.dumps({"error": "Location not found."})
-        # update conversation location
-        set_current_location(lat, lon, name=name)
         url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
         try:
             resp = requests.get(url, timeout=5)
             data = resp.json()
-            return json.dumps({"location": {"latitude": lat, "longitude": lon, "name": name}, "current_weather": data.get("current_weather")})
+            return json.dumps({"location": {"latitude": lat, "longitude": lon}, "current_weather": data.get("current_weather")})
         except Exception as e:
             return json.dumps({"error": str(e)})
 
     elif tool == "get_weather_forecast":
-        lat, lon, name = resolve_location(args)
+        lat, lon = resolve_location(args)
         if lat is None or lon is None:
             return json.dumps({"error": "Location not found."})
-        set_current_location(lat, lon, name=name)
         url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation,weathercode"
         try:
             resp = requests.get(url, timeout=5)
             data = resp.json()
-            return json.dumps({"location": {"latitude": lat, "longitude": lon, "name": name}, "forecast": data.get("hourly")})
+            return json.dumps({"location": {"latitude": lat, "longitude": lon}, "forecast": data.get("hourly")})
         except Exception as e:
             return json.dumps({"error": str(e)})
 
     elif tool == "get_weather_by_datetime":
-        lat, lon, name = resolve_location(args)
+        lat, lon = resolve_location(args)
         date = args.get("date")
         time = args.get("time")
         if lat is None or lon is None or not date or not time:
             return json.dumps({"error": "Please provide location, date, and time."})
-        set_current_location(lat, lon, name=name)
         url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation,weathercode&start_date={date}&end_date={date}"
         try:
             resp = requests.get(url, timeout=5)
@@ -337,24 +288,22 @@ def tools_router(tool, message):
             times = data.get("hourly", {}).get("time", [])
             idx = None
             for i, t in enumerate(times):
-                # handle both "YYYY-MM-DDTHH:MM" and "YYYY-MM-DD HH:MM" potential formats
-                if t.endswith(f"T{time}") or t.endswith(f" {time}"):
+                if t.endswith(f"T{time}"):
                     idx = i
                     break
             if idx is not None:
                 result = {k: v[idx] for k, v in data.get("hourly", {}).items() if isinstance(v, list)}
-                return json.dumps({"location": {"latitude": lat, "longitude": lon, "name": name}, "datetime": f"{date}T{time}", "weather": result})
+                return json.dumps({"location": {"latitude": lat, "longitude": lon}, "datetime": f"{date}T{time}", "weather": result})
             else:
                 return json.dumps({"error": "No weather data found for that date/time."})
         except Exception as e:
             return json.dumps({"error": str(e)})
 
     elif tool == "get_weather_by_date":
-        lat, lon, name = resolve_location(args)
+        lat, lon = resolve_location(args)
         date = args.get("date")
         if lat is None or lon is None or not date:
             return json.dumps({"error": "Please provide location and date."})
-        set_current_location(lat, lon, name=name)
         url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation,weathercode&start_date={date}&end_date={date}"
         try:
             resp = requests.get(url, timeout=5)
@@ -362,9 +311,10 @@ def tools_router(tool, message):
             weather = data.get("hourly")
             if not weather:
                 return json.dumps({"error": f"No forecast data available for {date}. Try a closer date."})
-            return json.dumps({"location": {"latitude": lat, "longitude": lon, "name": name}, "date": date, "weather": weather})
+            return json.dumps({"location": {"latitude": lat, "longitude": lon}, "date": date, "weather": weather})
         except Exception as e:
             return json.dumps({"error": str(e)})
+
 
     elif tool == "get_tools_list":
         tools_info = {name: info["description"] for name, info in tools_list.items()}
