@@ -20,6 +20,7 @@ html, body {
     text-align: center;
     padding: 2rem;
     border-radius: 24px;
+    position: relative;
 
     /* GLASS EFFECT */
     background: rgba(255, 255, 255, 0.35);
@@ -27,6 +28,72 @@ html, body {
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* small search box inside main-weather */
+.weather-search-box {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.weather-search-box .search-toggle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    color: #1a73e8;
+    transition: transform 0.15s ease;
+}
+
+.weather-search-box .search-toggle:active {
+    transform: scale(0.98);
+}
+
+.weather-search-box .search-input {
+    width: 0;
+    padding: 0 0 0 0;
+    border-radius: 20px;
+    border: none;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    font-size: 0.95rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: width 0.18s ease, opacity 0.12s ease, padding 0.12s ease;
+}
+
+.weather-search-box.expanded .search-input {
+    width: 200px;
+    padding: 8px 12px 8px 12px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.weather-search-box input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.weather-search-box .suggestions-list {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: auto;
+    width: 220px;
+    z-index: 1200;
 }
 
 .main-weather h2 {

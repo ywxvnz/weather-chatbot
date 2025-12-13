@@ -92,6 +92,15 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('selectedLocation', JSON.stringify(obj));
     }
 
+    // Format a full place string to "First, Last" (e.g. "Imus, ... , Philippines" -> "Imus, Philippines")
+    function formatDisplayName(fullName) {
+        if (!fullName) return '';
+        const parts = fullName.split(',').map(p => p.trim()).filter(Boolean);
+        if (parts.length === 0) return '';
+        if (parts.length === 1) return parts[0];
+        return parts[0] + ', ' + parts[parts.length - 1];
+    }
+
     async function setLocationAndUpdateUI(result) {
         if (!result) return;
         const displayName = result.name + (result.country ? ', ' + result.country : '');
@@ -102,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setSelectedLocation({ name: displayName, latitude: lat, longitude: lon });
 
         // update UI optimistically
-        if (locationNameEl) locationNameEl.textContent = displayName;
+        if (locationNameEl) locationNameEl.textContent = formatDisplayName(displayName);
         if (temperatureEl) temperatureEl.textContent = 'Loading...';
         if (conditionEl) conditionEl.textContent = '--';
 
@@ -124,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (stored) {
                 const loc = JSON.parse(stored);
                 if (loc && loc.latitude && loc.longitude) {
-                    if (locationNameEl) locationNameEl.textContent = loc.name;
+                    if (locationNameEl) locationNameEl.textContent = formatDisplayName(loc.name);
                     // fetch weather
                     setLocationAndUpdateUI({ name: loc.name, latitude: loc.latitude, longitude: loc.longitude });
                 }

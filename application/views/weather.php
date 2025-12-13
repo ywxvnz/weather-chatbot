@@ -2,14 +2,16 @@
 
 <div class="weather-container">
   <div class="main-weather text-center mb-4">
-    <!-- small search box (top-right) -->
+    <!-- circular search button that expands into input -->
     <div class="weather-search-box" aria-hidden="false">
-      <i class="fas fa-search search-icon"></i>
-      <input type="text" id="weatherSearch" placeholder="Search location..." autocomplete="off" aria-autocomplete="list" aria-controls="weatherSuggestions" aria-expanded="false">
+      <button id="weatherSearchBtn" class="search-toggle" aria-expanded="false" aria-label="Search location">
+        <i class="fas fa-search"></i>
+      </button>
+      <input type="text" id="weatherSearch" class="search-input" placeholder="Search location..." autocomplete="off" aria-autocomplete="list" aria-controls="weatherSuggestions" aria-expanded="false">
       <ul id="weatherSuggestions" class="suggestions-list d-none" role="listbox" aria-label="Search suggestions"></ul>
     </div>
 
-    <h2 id="weather-location">Cavite, Imus</h2>
+    <h2 id="weather-location"></h2>
     <p id="condition-text">Chance of rain: 0%</p>
     <img id="main-icon" src="" alt="Weather Icon" width="100">
     <h1 id="main-temp">--°</h1>
@@ -46,8 +48,23 @@
 
   async function getWeather() {
     try {
+      // fallback coords (Imus, Cavite) will be used if no coords provided via selectedLocation/localStorage
+      let lat = latitude;
+      let lon = longitude;
+      const stored = localStorage.getItem('selectedLocation');
+      if (stored) {
+        try {
+          const s = JSON.parse(stored);
+          if (s && s.latitude && s.longitude) {
+            lat = s.latitude;
+            lon = s.longitude;
+            if (s.name) document.getElementById('weather-location').textContent = formatDisplayName(s.name);
+          }
+        } catch (e) {}
+      }
+
       const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max&timezone=Asia/Manila`
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max&timezone=Asia/Manila`
       );
       const data = await response.json();
       displayCurrent(data.current_weather, data.daily);
@@ -83,7 +100,7 @@
       const hourlyDiv = document.getElementById('hourlyRow');
       hourlyDiv.innerHTML = '';
 
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 12; i++) {
           const time = new Date(hourly.time[i]).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
           const temp = hourly.temperature_2m[i];
           const icon = getWeatherIcon(hourly.weathercode[i]);
@@ -119,6 +136,168 @@
       `;
     }
   }
+
+  // -----------------------
+  // Autosuggest / geocoding for weather page
+  // -----------------------
+  async function geocode(query) {
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Geocoding failed');
+    const data = await res.json();
+    return data.results || [];
+  }
+
+  function setSelectedLocation(obj) {
+    localStorage.setItem('selectedLocation', JSON.stringify(obj));
+  }
+
+  // Format a full place string to "First, Last" (e.g. "Imus, ... , Philippines" -> "Imus, Philippines")
+  function formatDisplayName(fullName) {
+    if (!fullName) return '';
+    const parts = fullName.split(',').map(p => p.trim()).filter(Boolean);
+    if (parts.length === 0) return '';
+    if (parts.length === 1) return parts[0];
+    return parts[0] + ', ' + parts[parts.length - 1];
+  }
+
+  function clearSuggestions(el) {
+    if (!el) return;
+    el.innerHTML = '';
+    el.classList.add('d-none');
+  }
+
+  function renderSuggestions(results, suggestionsEl, inputEl) {
+    if (!suggestionsEl) return;
+    suggestionsEl.innerHTML = '';
+    if (!results || results.length === 0) {
+      clearSuggestions(suggestionsEl);
+      return;
+    }
+    results.forEach((r, i) => {
+      const li = document.createElement('li');
+      li.className = 'suggestion-item';
+      li.setAttribute('role', 'option');
+      li.id = 'weather-suggestion-' + i;
+      const label = (r.name || '') + (r.admin1 ? ', ' + r.admin1 : '') + (r.country ? ', ' + r.country : '');
+      li.textContent = label;
+      li.dataset.lat = r.latitude;
+      li.dataset.lon = r.longitude;
+      li.dataset.name = label;
+      li.addEventListener('click', async function () {
+        clearSuggestions(suggestionsEl);
+        inputEl.value = label;
+        const lat = r.latitude;
+        const lon = r.longitude;
+          setSelectedLocation({ name: label, latitude: lat, longitude: lon });
+        document.getElementById('weather-location').textContent = formatDisplayName(label);
+        document.getElementById('temperatureDisplay');
+        await getWeather();
+      });
+      suggestionsEl.appendChild(li);
+    });
+    suggestionsEl.classList.remove('d-none');
+  }
+
+  function debounce(fn, wait) {
+    let t;
+    return function (...args) {
+      clearTimeout(t);
+      t = setTimeout(() => fn.apply(this, args), wait);
+    };
+  }
+
+  // wire up expanding search button + input
+  const weatherSearchBtn = document.getElementById('weatherSearchBtn');
+  const weatherSearchInput = document.getElementById('weatherSearch');
+  const weatherSuggestions = document.getElementById('weatherSuggestions');
+  const weatherSearchBox = document.querySelector('.weather-search-box');
+
+  function expandSearch() {
+    if (!weatherSearchBox) return;
+    weatherSearchBox.classList.add('expanded');
+    weatherSearchBtn.setAttribute('aria-expanded', 'true');
+    weatherSearchInput.setAttribute('aria-expanded', 'true');
+    weatherSearchInput.focus();
+  }
+
+  function collapseSearch() {
+    if (!weatherSearchBox) return;
+    weatherSearchBox.classList.remove('expanded');
+    weatherSearchBtn.setAttribute('aria-expanded', 'false');
+    weatherSearchInput.setAttribute('aria-expanded', 'false');
+    weatherSearchInput.value = '';
+    clearSuggestions(weatherSuggestions);
+  }
+
+  async function fetchAndShowWeatherSuggestions(q) {
+    if (!q) { clearSuggestions(weatherSuggestions); return; }
+    try {
+      const results = await geocode(q);
+      renderSuggestions(results, weatherSuggestions, weatherSearchInput);
+    } catch (err) {
+      console.error('Suggestion error', err);
+      clearSuggestions(weatherSuggestions);
+    }
+  }
+
+  const debouncedWeatherFetch = debounce(fetchAndShowWeatherSuggestions, 250);
+
+  if (weatherSearchBtn && weatherSearchInput) {
+    weatherSearchBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (weatherSearchBox.classList.contains('expanded')) {
+        collapseSearch();
+      } else {
+        expandSearch();
+      }
+    });
+
+    weatherSearchInput.addEventListener('input', function (e) {
+      const q = weatherSearchInput.value.trim();
+      debouncedWeatherFetch(q);
+    });
+
+    weatherSearchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        const q = weatherSearchInput.value.trim();
+        if (!q) return;
+        e.preventDefault();
+        geocode(q).then(results => {
+          if (results.length === 0) { alert('Location not found'); return; }
+          const r = results[0];
+          const label = (r.name || '') + (r.admin1 ? ', ' + r.admin1 : '') + (r.country ? ', ' + r.country : '');
+          setSelectedLocation({ name: label, latitude: r.latitude, longitude: r.longitude });
+          document.getElementById('weather-location').textContent = formatDisplayName(label);
+          clearSuggestions(weatherSuggestions);
+          collapseSearch();
+          getWeather();
+        }).catch(err => { console.error(err); alert('Failed to search location'); });
+      } else if (e.key === 'Escape') {
+        collapseSearch();
+      }
+    });
+
+    // click outside collapses
+    document.addEventListener('click', function (ev) {
+      if (!weatherSearchBox) return;
+      if (!weatherSearchBox.contains(ev.target) && weatherSearchBox.classList.contains('expanded')) {
+        collapseSearch();
+      }
+    });
+  }
+
+  // initialize: apply stored location if present
+  window.addEventListener('DOMContentLoaded', function () {
+    const stored = localStorage.getItem('selectedLocation');
+    if (stored) {
+      try {
+        const s = JSON.parse(stored);
+        if (s && s.name) document.getElementById('weather-location').textContent = formatDisplayName(s.name);
+      } catch (e) {}
+    }
+    getWeather();
+  });
 
   const hourlyRow = document.getElementById('hourlyRow');
   const scrollLeftBtn = document.getElementById('scrollLeft');

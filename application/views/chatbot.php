@@ -68,6 +68,15 @@ function getSearchParams() {
     } catch (e) { return { q: '', lat: null, lon: null, loc: '' }; }
 }
 
+// Format a full place string to "First, Last" (e.g. "Imus, ... , Philippines" -> "Imus, Philippines")
+function formatDisplayName(fullName) {
+    if (!fullName) return '';
+    const parts = fullName.split(',').map(p => p.trim()).filter(Boolean);
+    if (parts.length === 0) return '';
+    if (parts.length === 1) return parts[0];
+    return parts[0] + ', ' + parts[parts.length - 1];
+}
+
 async function loadWeatherData(coords) {
     // coords: { latitude, longitude, name }
     const lat = coords && coords.latitude ? coords.latitude : DEFAULT_COORDS.latitude;
@@ -77,7 +86,7 @@ async function loadWeatherData(coords) {
         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`);
         const data = await response.json();
         const current = data.current_weather;
-        document.getElementById('locationDisplay').textContent = displayName;
+        document.getElementById('locationDisplay').textContent = formatDisplayName(displayName);
         document.getElementById('temperatureDisplay').textContent = `${current.temperature}°C`;
         const condition = getSimpleCondition(current.weathercode);
         document.getElementById('conditionDisplay').textContent = condition;
@@ -183,7 +192,7 @@ async function setLocationAndUpdateUI(result) {
 
     setSelectedLocation({ name: displayName, latitude: lat, longitude: lon });
 
-    if (document.getElementById('locationDisplay')) document.getElementById('locationDisplay').textContent = displayName;
+    if (document.getElementById('locationDisplay')) document.getElementById('locationDisplay').textContent = formatDisplayName(displayName);
     if (document.getElementById('temperatureDisplay')) document.getElementById('temperatureDisplay').textContent = 'Loading...';
     if (document.getElementById('conditionDisplay')) document.getElementById('conditionDisplay').textContent = '--';
 
