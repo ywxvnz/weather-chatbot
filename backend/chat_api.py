@@ -16,14 +16,16 @@ CORS(app)  # allow cross-origin requests while developing
 
 @app.route("/api/chat", methods=["POST"])
 def chat_endpoint():
-    data = request.get_json(force=True)
-    user_msg = data.get("message", "").strip()
+    data = request.get_json(force=True) or {}
+    user_msg = (data.get("message") or "").strip()
+    location = data.get("location")  # optional: { name, latitude, longitude }
+
     if not user_msg:
         return jsonify({"error": "Empty message"}), 400
 
     try:
-        # this will call chatbot_reply(user_input) in chat_backend.py
-        bot_reply = chat_backend.chatbot_reply(user_msg)
+        # chatbot_reply now accepts an optional location dict
+        bot_reply = chat_backend.chatbot_reply(user_msg, location=location)
         return jsonify({"reply": bot_reply})
     except Exception as e:
         # return error message for debugging (remove detail in production)
