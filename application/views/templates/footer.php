@@ -1,7 +1,7 @@
   </main>
 
   <footer class="text-center py-3 mt-auto">
-    <p class="mb-0" style="color: #1c234f;">&copy; <?php echo date('Y'); ?> Weather Chatbot | All Rights Reserved</p>
+    <p class="mb-0" style="color: #1c234f;">&copy; <?php echo date('Y'); ?> Nubi | All Rights Reserved</p>
   </footer>
 
   <!-- Bootstrap JS Bundle -->
