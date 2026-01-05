@@ -30,6 +30,10 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
+
+__pycache__/
+*.pyc
+
  
 # Ignore backend environment file containing API keys
 backend/.env
