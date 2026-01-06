@@ -97,25 +97,29 @@
   }
 
   function displayHourly(hourly) {
-      const hourlyDiv = document.getElementById('hourlyRow');
-      hourlyDiv.innerHTML = '';
+    const hourlyDiv = document.getElementById('hourlyRow');
+    hourlyDiv.innerHTML = '';
 
-      for (let i = 0; i < 12; i++) {
-          const time = new Date(hourly.time[i]).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
-          const temp = hourly.temperature_2m[i];
-          const icon = getWeatherIcon(hourly.weathercode[i]);
+    // Show 24 hours (full day)
+    const totalHours = Math.min(hourly.time.length, 24);
 
-          hourlyDiv.innerHTML += `
-              <div class="hour-card">
-                  <p>${time}</p>
-                  <img src="${icon}" alt="weather" width="50">
-                  <p>${temp}°</p>
-              </div>
-          `;
-      }
+    for (let i = 0; i < totalHours; i++) {
+        const time = new Date(hourly.time[i]).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
+        const temp = hourly.temperature_2m[i];
+        const icon = getWeatherIcon(hourly.weathercode[i]);
 
-      setTimeout(updateScrollButtons, 0);
-  }
+        hourlyDiv.innerHTML += `
+            <div class="hour-card">
+                <p>${time}</p>
+                <img src="${icon}" alt="weather" width="50">
+                <p>${temp}°</p>
+            </div>
+        `;
+    }
+
+    setTimeout(updateScrollButtons, 0);
+}
+
 
   function displayDaily(daily) {
     const dailyDiv = document.getElementById('dailyForecast');

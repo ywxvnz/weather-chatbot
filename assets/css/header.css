@@ -10,6 +10,8 @@ html, body {
     border: 1px solid rgba(255, 255, 255, 0.25);
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 	margin-top: 0 !important;
+	z-index: 999; /* make sure it stays above everything */
+
 }
 
 @media (max-width: 991.98px) {
