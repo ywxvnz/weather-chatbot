@@ -7,6 +7,18 @@ html, body {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Ensure mobile sidebar overlays glass-effect elements
+   Glass/backdrop-filter and transforms can create their own stacking contexts;
+   give common sidebar selectors fixed positioning and a very high z-index so
+   they appear above the weather card on mobile. If your sidebar markup uses a
+   different class/id, add it to the selector list below. */
+.sidebar, .app-sidebar, #sidebar, .offcanvas, .mobile-sidebar {
+    position: fixed !important;
+    z-index: 99999 !important;
+    top: 0;
+    left: 0;
+}
+
 /* CONTAINER */
 .weather-container {
     width: 100%;
@@ -118,6 +130,43 @@ html, body {
     font-weight: 300;
     color: #1a73e8;
     line-height: 1;
+}
+
+/* Insights row at bottom of main card */
+.insights-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.insight-card {
+    min-width: 110px;
+    padding: 0.6rem 0.8rem;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    text-align: center;
+}
+
+.insight-label {
+    font-size: 0.8rem;
+    color: #556;
+}
+
+.insight-value {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1c234f;
+}
+
+.aqi-label {
+    margin-top: 4px;
+    font-size: 0.60rem;
+    font-weight: 600;
 }
 
 /* SECTION HEADERS */
@@ -289,6 +338,20 @@ html, body {
     #main-temp {
         font-size: 3.8rem;
     }
+
+    /* Make insight cards wrap and form two columns on tablet/mobile */
+    .insights-row {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .insight-card {
+        flex: 1 1 calc(50% - 10px);
+        min-width: 120px;
+        max-width: calc(50% - 10px);
+        box-sizing: border-box;
+    }
 }
 
 @media (max-width: 480px) {
@@ -302,5 +365,29 @@ html, body {
 
     #hourlyRow > div {
         min-width: 80px;
+    }
+
+    /* On very small screens, lay out insight cards horizontally and allow swipe scrolling
+       Hide native scrollbars while keeping touch scrolling enabled */
+    .insights-row {
+        display: flex;
+        flex-wrap: nowrap; /* keep items in a single row */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 10px;
+        padding-bottom: 6px; /* avoid content clipping when scrollbar would appear */
+    }
+
+    /* hide scrollbars */
+    .insights-row::-webkit-scrollbar { display: none; }
+    .insights-row { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .insight-card {
+        flex: 0 0 auto; /* do not shrink; allow horizontal scrolling */
+        width: 110px; /* narrower to fit more cards */
+        min-width: 96px; /* minimum readable width */
+        max-width: 140px;
+        padding: 0.45rem 0.6rem; /* slightly reduced padding */
+        box-sizing: border-box;
     }
 }
