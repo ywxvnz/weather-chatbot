@@ -1,10 +1,10 @@
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ccdee6);
-    display: flex;
-    /* justify-content: center;
-    min-height: 100vh; */
+/* GLOBAL */
+html, body {
     margin: 0;
+    padding: 0;
+    background-color: #ccdee6;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Wrapper */

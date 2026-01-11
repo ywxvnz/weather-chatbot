@@ -1,12 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Notification extends CI_Controller {
+class Notification extends MY_Controller {
 
     // Loads the notification page
     public function index() {
-        // Just load the view — JS will fetch alerts dynamically
-        $this->load->view('notification');
+        // Render the notification view (keeps behavior consistent with Weather controller)
+        $data['title'] = 'Notifications';
+        $this->render('notification', $data);
     }
 
     // Returns weather alerts as JSON
