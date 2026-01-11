@@ -19,10 +19,12 @@
       <div class="insight-card">
         <div class="insight-label">Feels like</div>
         <div class="insight-value" id="feels-like-val">--°</div>
+        <div class="aqi-label" id="feels-like-label"></div>
       </div>
       <div class="insight-card">
         <div class="insight-label">UV Index</div>
         <div class="insight-value" id="uv-val">--</div>
+        <div class="aqi-label" id="uv-label"></div>
       </div>
       <div class="insight-card">
         <div class="insight-label">Air Quality</div>
@@ -149,6 +151,20 @@
           ? Math.round(hourly.apparent_temperature[nearestIdx])
           : null;
         document.getElementById('feels-like-val').textContent = feels != null ? `${feels}°` : '--°';
+        const feelsLabelEl = document.getElementById('feels-like-label');
+
+        if (feels != null) {
+          document.getElementById('feels-like-val').textContent = `${feels}°`;
+          
+          const fCat = feelsLikeCategory(feels);
+          if (feelsLabelEl) {
+            feelsLabelEl.textContent = fCat.label;
+            feelsLabelEl.style.color = fCat.color;
+          }
+        } else {
+          document.getElementById('feels-like-val').textContent = '--°';
+          if (feelsLabelEl) feelsLabelEl.textContent = '';
+        }
 
         // UV index
         const uv = hourly.uv_index && hourly.uv_index[nearestIdx] != null
@@ -157,6 +173,20 @@
         // Show as current / maximum (standard UV scale uses 0-11+, display denominator as 11 like Weather.com)
         const uvDenominator = 11;
         document.getElementById('uv-val').textContent = uv != null ? `${uv}/${uvDenominator}` : `--/${uvDenominator}`;
+        
+        const uvLabelEl = document.getElementById('uv-label');
+
+        if (uv != null) {
+          document.getElementById('uv-val').textContent = `${uv}/${uvDenominator}`;
+          const uvCat = uvCategory(uv);
+          if (uvLabelEl) {
+            uvLabelEl.textContent = uvCat.label;
+            uvLabelEl.style.color = uvCat.color;
+          }
+        } else {
+          document.getElementById('uv-val').textContent = `--/${uvDenominator}`;
+          if (uvLabelEl) uvLabelEl.textContent = '';
+        }
 
         // Air quality: use values from the dedicated Air Quality API when available
         const rawAqi = (airHourly && Array.isArray(airHourly.us_aqi) && airHourly.us_aqi[nearestIdx] != null)
@@ -273,6 +303,25 @@
     if (aqiVal <= 200) return {label: 'Unhealthy', color: '#d9534f'};
     if (aqiVal <= 300) return {label: 'Very Unhealthy', color: '#7e2a7e'};
     return {label: 'Hazardous', color: '#6b0019'};
+  }
+
+  // 🌡️ Feels-like interpretation (°C)
+  function feelsLikeCategory(temp) {
+    if (temp == null || isNaN(temp)) return { label: '', color: '' };
+    if (temp <= 26) return { label: 'Comfortable', color: '#0b9b3b' };
+    if (temp <= 32) return { label: 'Warm', color: '#f0ad4e' };
+    if (temp <= 38) return { label: 'Hot', color: '#f57c00' };
+    return { label: 'Very Hot', color: '#d9534f' };
+  }
+
+  // 🔆 UV index interpretation
+  function uvCategory(uv) {
+    if (uv == null || isNaN(uv)) return { label: '', color: '' };
+    if (uv <= 2) return { label: 'Low', color: '#0b9b3b' };
+    if (uv <= 5) return { label: 'Moderate', color: '#f0ad4e' };
+    if (uv <= 7) return { label: 'High', color: '#f57c00' };
+    if (uv <= 10) return { label: 'Very High', color: '#d9534f' };
+    return { label: 'Extreme', color: '#6b0019' };
   }
 
   function clearSuggestions(el) {
