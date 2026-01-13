@@ -66,10 +66,11 @@ class Notification extends MY_Controller {
         // 🔔 GENERATE NOTIFICATIONS
         // -------------------------
 
-        // Heat / feels like
+        // Heat / feels like (add severity)
         if ($feels !== null && $feels >= 38) {
             $notifications[] = [
                 'icon' => 'fa-temperature-high',
+                'severity' => 'danger',
                 'title' => 'Extreme Heat Advisory',
                 'description' => 'Feels like ' . round($feels) . '°C. Stay hydrated and avoid prolonged outdoor activities.',
                 'time' => $timeLabel
@@ -77,6 +78,7 @@ class Notification extends MY_Controller {
         } elseif ($feels !== null && $feels >= 33) {
             $notifications[] = [
                 'icon' => 'fa-temperature-half',
+                'severity' => 'warn',
                 'title' => 'Heat Advisory',
                 'description' => 'Feels like ' . round($feels) . '°C. Drink water and take breaks from the heat.',
                 'time' => $timeLabel
@@ -85,20 +87,34 @@ class Notification extends MY_Controller {
 
         // UV Index
         if ($uv !== null && $uv >= 8) {
+            // Treat >=11 as more severe if needed; for now mark >=8 as warn
             $notifications[] = [
                 'icon' => 'fa-sun',
+                'severity' => ($uv >= 11 ? 'danger' : 'warn'),
                 'title' => 'High UV Index',
                 'description' => 'UV index is ' . round($uv) . '. Wear sunscreen and protective clothing.',
                 'time' => $timeLabel
             ];
         }
 
-        // Rain probability
-        if ($rain !== null && $rain >= 70) {
+        // Rain probability — consider daily max as fallback and use the
+        // higher of hourly/daily so metrics and alerts align better.
+        $dailyRain = $weather['daily']['precipitation_probability_max'][0] ?? null;
+        $rainForAlert = null;
+        if ($rain !== null && $dailyRain !== null) {
+            $rainForAlert = max($rain, $dailyRain);
+        } elseif ($rain !== null) {
+            $rainForAlert = $rain;
+        } elseif ($dailyRain !== null) {
+            $rainForAlert = $dailyRain;
+        }
+
+        if ($rainForAlert !== null && $rainForAlert >= 70) {
             $notifications[] = [
                 'icon' => 'fa-cloud-rain',
+                'severity' => 'danger',
                 'title' => 'Rain Advisory',
-                'description' => 'High chance of rain (' . round($rain) . '%). Bring an umbrella.',
+                'description' => 'High chance of rain (' . round($rainForAlert) . '%). Bring an umbrella.',
                 'time' => $timeLabel
             ];
         }
@@ -107,6 +123,7 @@ class Notification extends MY_Controller {
         if ($aqi !== null && $aqi > 100) {
             $notifications[] = [
                 'icon' => 'fa-smog',
+                'severity' => 'danger',
                 'title' => 'Air Quality Notice',
                 'description' => 'Air quality is unhealthy for sensitive groups. Limit outdoor activity.',
                 'time' => $timeLabel
@@ -114,6 +131,7 @@ class Notification extends MY_Controller {
         } elseif ($aqi !== null && $aqi > 50) {
             $notifications[] = [
                 'icon' => 'fa-smog',
+                'severity' => 'warn',
                 'title' => 'Moderate Air Quality',
                 'description' => 'Air quality is moderate. Sensitive individuals should take caution.',
                 'time' => $timeLabel

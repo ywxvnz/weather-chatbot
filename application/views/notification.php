@@ -2,7 +2,7 @@
 
 
 <div class="notification-container">
-  <div class="main-notification text-center mb-4">
+  <div class="main-notification text-center">
     <!-- Selected location -->
     <div class="notif-header">
         <h2 id="selectedLocation">Loading location...</h2>
@@ -12,8 +12,8 @@
 
     <div class="notif-container">
         <!-- Loading message -->
-        <div class="notification sunny">
-            <div class="icon"><i class="fas fa-bell"></i></div>
+        <div class="notification default">
+            <!--<div class="icon"><i class="fas fa-bell" style="color: white;  box-shadow: 0 3px 8px rgba(0,0,0,0.1);"></i></div>-->
             <div class="content">
                 <div class="title">Loading alerts...</div>
                 <div class="description">Please wait while we fetch the latest alerts.</div>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Metrics (chance of rain, temp, feels-like, UV, AQI) -->
-    <div class="notif-metrics m-3"></div>
+    <div class="notif-metrics mt-3 mb-3"></div>
 
   </div>
 </div>
@@ -83,42 +83,66 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const container = document.querySelector('.notif-container');
-            container.innerHTML = '';
 
-            if (!data || data.length === 0) {
-                container.innerHTML = `
-                    <div class="notification sunny">
-                        <div class="icon"><i class="fas fa-bell"></i></div>
-                        <div class="content">
-                            <div class="title">No alerts for this location</div>
-                            <div class="description">You're safe! There are currently no weather alerts.</div>
+            // simple change detection: only re-render if data changed
+            const dataJSON = JSON.stringify(data || []);
+            if (window._lastAlertsJSON === dataJSON) {
+                // nothing changed
+                // still update the 'updated' timestamp below
+            } else {
+                window._lastAlertsJSON = dataJSON;
+                container.innerHTML = '';
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = `
+                        <div class="notification default">
+                            <!--<div class="icon"><i class="fas fa-bell"></i></div>-->
+                            <div class="content">
+                                <div class="title">No alerts for this location</div>
+                                <div class="description">You're safe! There are currently no weather alerts.</div>
+                            </div>
+                            <div class="time">--:--</div>
                         </div>
-                        <div class="time">--:--</div>
-                    </div>
-                `;
-                return;
+                    `;
+                } else {
+                    // map severity to visual class as needed
+                    const severityMap = { danger: 'stormy', warn: 'rainy', ok: 'sunny' };
+                    data.forEach(note => {
+                        const sev = note.severity || '';
+                        const typeClass = severityMap[sev] || 'sunny';
+                        container.innerHTML += `
+                            <div class="notification ${typeClass}">
+                                <div class="icon"><i class="fas ${note.icon}"></i></div>
+                                <div class="content">
+                                    <div class="title">${note.title}</div>
+                                    <div class="description">${note.description}</div>
+                                </div>
+                                <div class="time">${note.time}</div>
+                            </div>
+                        `;
+                    });
+                }
             }
 
-            data.forEach(note => {
-                // Assign alert type classes based on severity
-                let typeClass = "sunny";
-                if (note.icon.includes('triangle')) typeClass = "stormy";
-                else if (note.icon.includes('cloud')) typeClass = "rainy";
-                else if (note.icon.includes('circle')) typeClass = "cloudy";
+            // Update last-updated time in header
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            const headerP = document.querySelector('.notif-header p');
+            if (headerP) headerP.innerText = `Weather-based tips • Updated ${timeStr}`;
 
-                container.innerHTML += `
-                    <div class="notification ${typeClass}">
-                        <div class="icon"><i class="fas ${note.icon}"></i></div>
-                        <div class="content">
-                            <div class="title">${note.title}</div>
-                            <div class="description">${note.description}</div>
-                        </div>
-                        <div class="time">${note.time}</div>
-                    </div>
-                `;
-            });
         } catch (err) {
             console.error('Failed to load alerts', err);
+            const container = document.querySelector('.notif-container');
+            if (container) container.innerHTML = `
+                <div class="notification cloudy">
+                    <div class="icon"><i class="fas fa-circle-exclamation"></i></div>
+                    <div class="content">
+                        <div class="title">Unable to load alerts</div>
+                        <div class="description">Please check your connection and try again.</div>
+                    </div>
+                    <div class="time">--:--</div>
+                </div>
+            `;
         }
     }
 
