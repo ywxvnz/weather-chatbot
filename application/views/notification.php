@@ -1,25 +1,31 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-<div class="d-flex justify-content-center my-5">
-    <div class="notif-wrapper">
-        <!-- Selected location -->
-        <div class="notif-header">
-            <h2 id="selectedLocation">Loading location...</h2>
-            <p>Weather alerts for your selected location</p>
-        </div>
 
-        <div class="notif-container">
-            <!-- Loading message -->
-            <div class="notification sunny">
-                <div class="icon"><i class="fas fa-bell"></i></div>
-                <div class="content">
-                    <div class="title">Loading alerts...</div>
-                    <div class="description">Please wait while we fetch the latest alerts.</div>
-                </div>
-                <div class="time">--:--</div>
+<div class="notification-container">
+  <div class="main-notification text-center mb-4">
+    <!-- Selected location -->
+    <div class="notif-header">
+        <h2 id="selectedLocation">Loading location...</h2>
+        
+        <p>Weather-based tips and advisories for your selected location</p>
+    </div>
+
+    <div class="notif-container">
+        <!-- Loading message -->
+        <div class="notification sunny">
+            <div class="icon"><i class="fas fa-bell"></i></div>
+            <div class="content">
+                <div class="title">Loading alerts...</div>
+                <div class="description">Please wait while we fetch the latest alerts.</div>
             </div>
+            <div class="time">--:--</div>
         </div>
     </div>
+
+    <!-- Metrics (chance of rain, temp, feels-like, UV, AQI) -->
+    <div class="notif-metrics m-3"></div>
+
+  </div>
 </div>
 
 <script>
@@ -47,8 +53,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const locationEl = document.getElementById('selectedLocation');
         if (locationEl) locationEl.textContent = locationName;
 
+        // Fetch and render metric notifications first
         try {
-            const res = await fetch(`<?= site_url('notification/weather_alerts'); ?>?lat=${lat}&lon=${lon}`);
+            await fetchMetrics(lat, lon);
+        } catch (merr) {
+            console.warn('Failed to load metrics', merr);
+        }
+
+        try {
+            const res = await fetch(`?lat=${lat}&lon=${lon}`);
             const data = await res.json();
 
             const container = document.querySelector('.notif-container');
@@ -96,4 +109,141 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(fetchAlerts, 5 * 60 * 1000);
 
 });
+
+// --- Metrics fetcher & renderer ---
+async function fetchMetrics(lat, lon) {
+    const metricsEl = document.querySelector('.notif-metrics');
+    if (!metricsEl) return;
+    metricsEl.innerHTML = ''; // clear
+
+    try {
+        // fetch forecast + hourly data for apparent temp & uv and daily precipitation chance
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=apparent_temperature,uv_index&daily=precipitation_probability_max&timezone=Asia/Manila`;
+        const res = await fetch(url);
+        const fw = await res.json();
+
+        // air quality (us_aqi)
+        let aqi = null;
+        try {
+            const airRes = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=us_aqi&timezone=Asia/Manila`);
+            const airJson = await airRes.json();
+            if (airJson && airJson.hourly && Array.isArray(airJson.hourly.us_aqi)) {
+                // pick nearest hour (0 index)
+                aqi = Math.round(airJson.hourly.us_aqi[0]);
+            }
+        } catch (e) {
+            console.debug('AQI fetch failed', e);
+        }
+
+        const current = fw.current_weather || {};
+        const daily = fw.daily || {};
+        const hourly = fw.hourly || {};
+
+        const rainChance = (daily.precipitation_probability_max && daily.precipitation_probability_max[0] != null) ? daily.precipitation_probability_max[0] : 0;
+        const temp = current.temperature != null ? Math.round(current.temperature) : null;
+
+        // nearest hourly index (use first available)
+        let feels = null, uv = null;
+        if (hourly && Array.isArray(hourly.apparent_temperature) && hourly.apparent_temperature.length) {
+            feels = Math.round(hourly.apparent_temperature[0]);
+        }
+        if (hourly && Array.isArray(hourly.uv_index) && hourly.uv_index.length) {
+            uv = Math.round(hourly.uv_index[0]);
+        }
+
+        const metrics = [];
+
+        function pushMetric(key, label, value, status, message, icon) {
+            metrics.push({ key, label, value, status, message, icon });
+        }
+
+        // 🌧 Chance of rain
+        if (rainChance < 30) {
+            pushMetric('rain', 'Chance of Rain', `${rainChance}%`, 'ok',
+                'Low chance of rain — enjoy your day!', 'fa-cloud-sun');
+        } else if (rainChance < 70) {
+            pushMetric('rain', 'Chance of Rain', `${rainChance}%`, 'warn',
+                'There might be rain later. Bring an umbrella just in case.', 'fa-cloud');
+        } else {
+            pushMetric('rain', 'Chance of Rain', `${rainChance}%`, 'danger',
+                'High chance of rain — expect wet conditions.', 'fa-cloud-showers-heavy');
+        }
+
+        // 🌡 Temperature
+        if (temp !== null) {
+            if (temp < 30) {
+                pushMetric('temp', 'Temperature', `${temp}°C`, 'ok',
+                    'Comfortable temperature today.', 'fa-thermometer-half');
+            } else if (temp < 36) {
+                pushMetric('temp', 'Temperature', `${temp}°C`, 'warn',
+                    'It’s getting warm. Stay hydrated.', 'fa-temperature-high');
+            } else {
+                pushMetric('temp', 'Temperature', `${temp}°C`, 'danger',
+                    'Extreme heat detected. Avoid prolonged sun exposure.', 'fa-temperature-high');
+            }
+        }
+
+        // 🧍 Feels like
+        if (feels !== null) {
+            if (feels < 35) {
+                pushMetric('feels', 'Feels Like', `${feels}°C`, 'ok',
+                    'Feels comfortable outside.', 'fa-user');
+            } else {
+                pushMetric('feels', 'Feels Like', `${feels}°C`, 'danger',
+                    'Feels extremely hot. Take frequent breaks.', 'fa-user-shield');
+            }
+        }
+
+        // ☀ UV Index
+        if (uv !== null) {
+            if (uv <= 2) {
+                pushMetric('uv', 'UV Index', uv, 'ok',
+                    'Low UV levels. Minimal protection needed.', 'fa-sun');
+            } else if (uv <= 7) {
+                pushMetric('uv', 'UV Index', uv, 'warn',
+                    'Moderate UV. Use sunscreen if outdoors.', 'fa-sun');
+            } else {
+                pushMetric('uv', 'UV Index', uv, 'danger',
+                    'Very high UV. Sunscreen and shade are essential.', 'fa-sun');
+            }
+        }
+
+        // 🌫 Air Quality
+        if (aqi !== null) {
+            if (aqi <= 50) {
+                pushMetric('aqi', 'Air Quality', `AQI ${aqi}`, 'ok',
+                    'Air quality is good.', 'fa-wind');
+            } else if (aqi <= 100) {
+                pushMetric('aqi', 'Air Quality', `AQI ${aqi}`, 'warn',
+                    'Air quality is moderate. Sensitive groups should take care.', 'fa-smog');
+            } else {
+                pushMetric('aqi', 'Air Quality', `AQI ${aqi}`, 'danger',
+                    'Poor air quality. Wearing a face mask is recommended.', 'fa-mask-face');
+            }
+        }
+
+        // desired visual order
+        const metricOrder = ['temp', 'rain', 'feels', 'aqi', 'uv'];
+
+        // sort ONCE
+        metrics.sort((a, b) =>
+            metricOrder.indexOf(a.key) - metricOrder.indexOf(b.key)
+        );
+
+        // render
+        metricsEl.innerHTML = metrics.map(m => `
+            <div class="notification metric ${m.status} ${m.key === 'temp' ? 'metric-wide' : ''}">
+                <div class="icon"><i class="fas ${m.icon}"></i></div>
+                <div class="content">
+                    <div class="title">${m.label}</div>
+                    <div class="description">${m.message}</div>
+                </div>
+                <div class="time">${m.value}</div>
+            </div>
+        `).join('');
+
+    } catch (err) {
+        console.error('Failed to load metrics', err);
+    }
+}
 </script>

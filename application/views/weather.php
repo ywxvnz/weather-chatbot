@@ -299,9 +299,9 @@
     if (aqiVal == null || isNaN(aqiVal)) return {label: '', color: ''};
     if (aqiVal <= 50) return {label: 'Good', color: '#0b9b3b'};
     if (aqiVal <= 100) return {label: 'Moderate', color: '#f0ad4e'};
-    if (aqiVal <= 150) return {label: 'Unhealthy for SG', color: '#f57c00'};
-    if (aqiVal <= 200) return {label: 'Unhealthy', color: '#d9534f'};
-    if (aqiVal <= 300) return {label: 'Very Unhealthy', color: '#7e2a7e'};
+    if (aqiVal <= 150) return {label: 'Poor', color: '#f57c00'};
+    if (aqiVal <= 200) return {label: 'Very Poor', color: '#d9534f'};
+    if (aqiVal <= 300) return {label: 'Extremely Poor', color: '#7e2a7e'};
     return {label: 'Hazardous', color: '#6b0019'};
   }
 
