@@ -292,7 +292,9 @@
     const parts = fullName.split(',').map(p => p.trim()).filter(Boolean);
     if (parts.length === 0) return '';
     if (parts.length === 1) return parts[0];
-    return parts[0] + ', ' + parts[parts.length - 1];
+    // Prefer the 2nd part (admin1) when available, otherwise fall back to the last part
+    if (parts.length >= 2) return parts[0] + ', ' + parts[1];
+    return parts[0];
   }
 
   function aqiCategory(aqiVal) {

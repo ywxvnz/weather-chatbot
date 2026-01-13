@@ -98,12 +98,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const parts = fullName.split(',').map(p => p.trim()).filter(Boolean);
         if (parts.length === 0) return '';
         if (parts.length === 1) return parts[0];
-        return parts[0] + ', ' + parts[parts.length - 1];
+        // Prefer the 2nd part (admin1) when available, otherwise fall back to the last part
+        if (parts.length >= 2) return parts[0] + ', ' + parts[1];
+        return parts[0];
     }
 
     async function setLocationAndUpdateUI(result) {
         if (!result) return;
-        const displayName = result.name + (result.country ? ', ' + result.country : '');
+        // Prefer admin1 (region/province) when available, otherwise use country
+        const displayName = result.name + (result.admin1 ? ', ' + result.admin1 : (result.country ? ', ' + result.country : ''));
         const lat = result.latitude;
         const lon = result.longitude;
 
@@ -178,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
             li.addEventListener('click', async function () {
                 clearSuggestions();
                 searchInput.value = label;
-                await setLocationAndUpdateUI({ name: r.name, country: r.country, latitude: r.latitude, longitude: r.longitude });
+                await setLocationAndUpdateUI({ name: r.name, admin1: r.admin1, country: r.country, latitude: r.latitude, longitude: r.longitude });
             });
             suggestionsEl.appendChild(li);
         });
