@@ -4,11 +4,20 @@
 <div class="notification-container">
   <div class="main-notification text-center">
     <!-- Selected location -->
-    <div class="notif-header">
-        <h2 id="selectedLocation">Loading location...</h2>
+        <div class="notif-header">
+                <!-- circular search button that expands into input (copied from weather page) -->
+                <div class="weather-search-box" aria-hidden="false">
+                    <button id="weatherSearchBtn" class="search-toggle" aria-expanded="false" aria-label="Search location">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input type="text" id="weatherSearch" class="search-input" placeholder="Search location..." autocomplete="off" aria-autocomplete="list" aria-controls="weatherSuggestions" aria-expanded="false">
+                    <ul id="weatherSuggestions" class="suggestions-list d-none" role="listbox" aria-label="Search suggestions"></ul>
+                </div>
+
+                <h2 id="selectedLocation">Loading location...</h2>
         
-        <p>Weather-based tips and advisories for your selected location</p>
-    </div>
+                <p>Weather-based tips and advisories for your selected location</p>
+        </div>
 
     <div class="notif-container">
         <!-- Loading message -->
@@ -31,6 +40,157 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
+    // --- Search box / autosuggest (initialize once) ---
+    (function initNotifSearch() {
+        async function geocode(query) {
+            const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Geocoding failed');
+            const data = await res.json();
+            return data.results || [];
+        }
+
+        function setSelectedLocation(obj) {
+            localStorage.setItem('selectedLocation', JSON.stringify(obj));
+        }
+
+        function formatDisplayName(fullName) {
+            if (!fullName) return '';
+            const parts = fullName.split(',').map(p => p.trim()).filter(Boolean);
+            if (parts.length === 0) return '';
+            if (parts.length === 1) return parts[0];
+            return parts[0] + ', ' + (parts[1] || parts[parts.length - 1]);
+        }
+
+        function clearSuggestions(el) {
+            if (!el) return;
+            el.innerHTML = '';
+            el.classList.add('d-none');
+        }
+
+        function renderSuggestions(results, suggestionsEl, inputEl) {
+            if (!suggestionsEl) return;
+            suggestionsEl.innerHTML = '';
+            if (!results || results.length === 0) {
+                clearSuggestions(suggestionsEl);
+                return;
+            }
+            results.forEach((r, i) => {
+                const li = document.createElement('li');
+                li.className = 'suggestion-item';
+                li.setAttribute('role', 'option');
+                li.id = 'weather-suggestion-' + i;
+                const label = (r.name || '') + (r.admin1 ? ', ' + r.admin1 : '') + (r.country ? ', ' + r.country : '');
+                li.textContent = label;
+                li.dataset.lat = r.latitude;
+                li.dataset.lon = r.longitude;
+                li.dataset.name = label;
+                li.addEventListener('click', async function () {
+                    clearSuggestions(suggestionsEl);
+                    inputEl.value = label;
+                    const lat = r.latitude;
+                    const lon = r.longitude;
+                    setSelectedLocation({ name: label, latitude: lat, longitude: lon });
+                    const locationEl = document.getElementById('selectedLocation');
+                    if (locationEl) locationEl.textContent = formatDisplayName(label);
+                    // refresh both metrics and alerts for new location
+                    try { await fetchMetrics(lat, lon); } catch(e){}
+                    try { await fetchAlerts(); } catch(e){}
+                });
+                suggestionsEl.appendChild(li);
+            });
+            suggestionsEl.classList.remove('d-none');
+        }
+
+        function debounce(fn, wait) {
+            let t;
+            return function (...args) {
+                clearTimeout(t);
+                t = setTimeout(() => fn.apply(this, args), wait);
+            };
+        }
+
+        // wire up expanding search button + input
+        const weatherSearchBtn = document.getElementById('weatherSearchBtn');
+        const weatherSearchInput = document.getElementById('weatherSearch');
+        const weatherSuggestions = document.getElementById('weatherSuggestions');
+        const weatherSearchBox = document.querySelector('.weather-search-box');
+
+        async function fetchAndShowWeatherSuggestions(q) {
+            if (!q) { clearSuggestions(weatherSuggestions); return; }
+            try {
+                const results = await geocode(q);
+                renderSuggestions(results, weatherSuggestions, weatherSearchInput);
+            } catch (err) {
+                console.error('Suggestion error', err);
+                clearSuggestions(weatherSuggestions);
+            }
+        }
+
+        const debouncedWeatherFetch = debounce(fetchAndShowWeatherSuggestions, 250);
+
+        if (weatherSearchBtn && weatherSearchInput) {
+            weatherSearchBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (weatherSearchBox.classList.contains('expanded')) {
+                    weatherSearchBox.classList.remove('expanded');
+                    weatherSearchBtn.setAttribute('aria-expanded', 'false');
+                    weatherSearchInput.setAttribute('aria-expanded', 'false');
+                    weatherSearchInput.value = '';
+                    clearSuggestions(weatherSuggestions);
+                } else {
+                    weatherSearchBox.classList.add('expanded');
+                    weatherSearchBtn.setAttribute('aria-expanded', 'true');
+                    weatherSearchInput.setAttribute('aria-expanded', 'true');
+                    weatherSearchInput.focus();
+                }
+            });
+
+            weatherSearchInput.addEventListener('input', function (e) {
+                const q = weatherSearchInput.value.trim();
+                debouncedWeatherFetch(q);
+            });
+
+            weatherSearchInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    const q = weatherSearchInput.value.trim();
+                    if (!q) return;
+                    e.preventDefault();
+                    geocode(q).then(results => {
+                        if (results.length === 0) { alert('Location not found'); return; }
+                        const r = results[0];
+                        const label = (r.name || '') + (r.admin1 ? ', ' + r.admin1 : '') + (r.country ? ', ' + r.country : '');
+                        setSelectedLocation({ name: label, latitude: r.latitude, longitude: r.longitude });
+                        const locationEl = document.getElementById('selectedLocation');
+                        if (locationEl) locationEl.textContent = formatDisplayName(label);
+                        clearSuggestions(weatherSuggestions);
+                        weatherSearchBox.classList.remove('expanded');
+                        fetchMetrics(r.latitude, r.longitude).catch(()=>{});
+                        fetchAlerts();
+                    }).catch(err => { console.error(err); alert('Failed to search location'); });
+                } else if (e.key === 'Escape') {
+                    weatherSearchBox.classList.remove('expanded');
+                    weatherSearchBtn.setAttribute('aria-expanded', 'false');
+                    weatherSearchInput.setAttribute('aria-expanded', 'false');
+                    weatherSearchInput.value = '';
+                    clearSuggestions(weatherSuggestions);
+                }
+            });
+
+            // click outside collapses
+            document.addEventListener('click', function (ev) {
+                if (!weatherSearchBox) return;
+                if (!weatherSearchBox.contains(ev.target) && weatherSearchBox.classList.contains('expanded')) {
+                    weatherSearchBox.classList.remove('expanded');
+                    weatherSearchBtn.setAttribute('aria-expanded', 'false');
+                    weatherSearchInput.setAttribute('aria-expanded', 'false');
+                    weatherSearchInput.value = '';
+                    clearSuggestions(weatherSuggestions);
+                }
+            });
+        }
+    })();
+
     async function fetchAlerts() {
         let lat = 14.4297; // default
         let lon = 120.9367; // default
@@ -52,6 +212,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update location header
         const locationEl = document.getElementById('selectedLocation');
         if (locationEl) locationEl.textContent = locationName;
+
+        // (search initialized separately) -- no-op here
 
         // Fetch and render metric notifications first
         try {
