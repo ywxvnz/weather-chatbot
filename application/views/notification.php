@@ -61,13 +61,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const res = await fetch(`?lat=${lat}&lon=${lon}`);
-            const data = await res.json();
+            // Build the alerts endpoint using CodeIgniter's site_url so it
+            // works whether or not index.php rewrite is enabled.
+            const alertsEndpoint = '<?php echo site_url("notification/weather_alerts"); ?>';
+            const alertsUrl = alertsEndpoint + `?lat=${lat}&lon=${lon}`;
+            console.debug('Fetching alerts from', alertsUrl);
+            const res = await fetch(alertsUrl);
+
+            if (!res.ok) {
+                const txt = await res.text();
+                console.error('Alerts endpoint error', res.status, txt);
+                throw new Error('Alerts endpoint returned ' + res.status);
+            }
+
+            let data;
+            try {
+                data = await res.json();
+            } catch (e) {
+                console.error('Invalid JSON from alerts endpoint', e);
+                throw e;
+            }
 
             const container = document.querySelector('.notif-container');
             container.innerHTML = '';
 
-            if (data.length === 0) {
+            if (!data || data.length === 0) {
                 container.innerHTML = `
                     <div class="notification sunny">
                         <div class="icon"><i class="fas fa-bell"></i></div>
