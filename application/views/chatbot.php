@@ -115,23 +115,35 @@ function addMessage(content, type) {
 }
 
 async function simulateResponse(userMsg) {
-    // Show typing indicator
     const typingBubble = document.createElement('div');
     typingBubble.classList.add('chat-bubble', 'system');
     typingBubble.textContent = "Thinking...";
     chatArea.appendChild(typingBubble);
     chatArea.scrollTop = chatArea.scrollHeight;
 
+    // ✅ Get location safely
+    let selectedLocation = null;
+    try {
+        selectedLocation = JSON.parse(localStorage.getItem('selectedLocation'));
+        console.log("Selected Location:", selectedLocation);
+    } catch (e) {
+        console.warn("No location saved yet.");
+        selectedLocation = null;
+    }
+
     try {
         const response = await fetch("http://localhost:5000/api/chat", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ message: userMsg })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message: userMsg,
+                selectedLocation: selectedLocation // send location to backend
+            })
         });
 
-        typingBubble.remove(); // remove "Thinking..." bubble
+        console.log("Request sent:", { message: userMsg, selectedLocation });
+
+        typingBubble.remove();
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
@@ -140,14 +152,14 @@ async function simulateResponse(userMsg) {
         }
 
         const data = await response.json();
-        if (data.reply) {
-            addMessage(data.reply, 'system');
-        } else {
-            addMessage("No reply from chatbot.", 'system');
-        }
+        console.log("Response received:", data);
+
+        if (data.reply) addMessage(data.reply, 'system');
+        else addMessage("No reply from chatbot.", 'system');
     } catch (error) {
         typingBubble.remove();
         addMessage("Network error: " + error.message, 'system');
+        console.error(error);
     }
 }
 
