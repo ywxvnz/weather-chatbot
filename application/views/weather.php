@@ -15,6 +15,27 @@
     <p id="condition-text">Chance of rain: 0%</p>
     <img id="main-icon" src="" alt="Weather Icon" width="100">
     <h1 id="main-temp">--°</h1>
+    <div class="insights-row mt-3" aria-hidden="false">
+      <div class="insight-card">
+        <div class="insight-label">Feels like</div>
+        <div class="insight-value" id="feels-like-val">--°</div>
+        <div class="aqi-label" id="feels-like-label"></div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">UV Index</div>
+        <div class="insight-value" id="uv-val">--</div>
+        <div class="aqi-label" id="uv-label"></div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Air Quality</div>
+        <div class="insight-value" id="aqi-val">--</div>
+        <div class="aqi-label" id="aqi-label" aria-hidden="true"></div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-label">Last updated</div>
+        <div class="insight-value" id="time-val">--</div>
+      </div>
+    </div>
   </div>
 
   <!-- Today's Forecast -->
@@ -63,11 +84,25 @@
         } catch (e) {}
       }
 
+      // Fetch weather forecast (excluding AQI/pollutants) and fetch air-quality separately
       const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max&timezone=Asia/Manila`
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode,apparent_temperature,uv_index&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max&timezone=Asia/Manila`
       );
       const data = await response.json();
-      displayCurrent(data.current_weather, data.daily);
+
+      // Fetch air quality from the dedicated Air Quality API and merge hourly values
+      let airHourly = null;
+      try {
+        const airRes = await fetch(
+          `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=us_aqi,pm2_5&timezone=Asia/Manila`
+        );
+        const airData = await airRes.json();
+        airHourly = airData.hourly || null;
+      } catch (e) {
+        console.debug('Air quality fetch failed', e);
+      }
+
+      await displayCurrent(data.current_weather, data.daily, data.hourly, airHourly, lat, lon);
       displayHourly(data.hourly);
       displayDaily(data.daily);
     } catch (error) {
@@ -86,14 +121,109 @@
     return "assets/icons/weather.png";                                   // Default cloudy
   }
 
-  function displayCurrent(current, daily) {
+  function displayCurrent(current, daily, hourly, airHourly, lat, lon) {
     document.getElementById("main-temp").textContent = `${current.temperature}°`;
     document.getElementById("main-icon").src = getWeatherIcon(current.weathercode);
 
-    const rainChance = daily.precipitation_probability_max[0];
+    const rainChance = (daily && daily.precipitation_probability_max && daily.precipitation_probability_max[0] != null)
+      ? daily.precipitation_probability_max[0]
+      : null;
     const conditionText = document.getElementById("condition-text");
     conditionText.textContent =
       rainChance > 0 ? `Chance of rain: ${rainChance}%` : "No rain expected today 🌤️";
+
+    // Insights: find nearest hourly index to now
+    if (hourly && hourly.time && hourly.time.length) {
+      const now = new Date();
+      let nearestIdx = 0;
+      let minDiff = Infinity;
+      for (let i = 0; i < hourly.time.length; i++) {
+        const t = new Date(hourly.time[i]).getTime();
+        const diff = Math.abs(t - now.getTime());
+        if (diff < minDiff) {
+          minDiff = diff;
+          nearestIdx = i;
+        }
+      }
+
+        // Feels like (apparent_temperature)
+        const feels = hourly.apparent_temperature && hourly.apparent_temperature[nearestIdx] != null
+          ? Math.round(hourly.apparent_temperature[nearestIdx])
+          : null;
+        document.getElementById('feels-like-val').textContent = feels != null ? `${feels}°` : '--°';
+        const feelsLabelEl = document.getElementById('feels-like-label');
+
+        if (feels != null) {
+          document.getElementById('feels-like-val').textContent = `${feels}°`;
+          
+          const fCat = feelsLikeCategory(feels);
+          if (feelsLabelEl) {
+            feelsLabelEl.textContent = fCat.label;
+            feelsLabelEl.style.color = fCat.color;
+          }
+        } else {
+          document.getElementById('feels-like-val').textContent = '--°';
+          if (feelsLabelEl) feelsLabelEl.textContent = '';
+        }
+
+        // UV index
+        const uv = hourly.uv_index && hourly.uv_index[nearestIdx] != null
+          ? Math.round(hourly.uv_index[nearestIdx])
+          : null;
+        // Show as current / maximum (standard UV scale uses 0-11+, display denominator as 11 like Weather.com)
+        const uvDenominator = 11;
+        document.getElementById('uv-val').textContent = uv != null ? `${uv}/${uvDenominator}` : `--/${uvDenominator}`;
+        
+        const uvLabelEl = document.getElementById('uv-label');
+
+        if (uv != null) {
+          document.getElementById('uv-val').textContent = `${uv}/${uvDenominator}`;
+          const uvCat = uvCategory(uv);
+          if (uvLabelEl) {
+            uvLabelEl.textContent = uvCat.label;
+            uvLabelEl.style.color = uvCat.color;
+          }
+        } else {
+          document.getElementById('uv-val').textContent = `--/${uvDenominator}`;
+          if (uvLabelEl) uvLabelEl.textContent = '';
+        }
+
+        // Air quality: use values from the dedicated Air Quality API when available
+        const rawAqi = (airHourly && Array.isArray(airHourly.us_aqi) && airHourly.us_aqi[nearestIdx] != null)
+          ? airHourly.us_aqi[nearestIdx]
+          : null;
+        const aqi = rawAqi != null ? Math.round(rawAqi) : null;
+        const aqiEl = document.getElementById('aqi-val');
+        const aqiLabelEl = document.getElementById('aqi-label');
+        if (aqi != null) {
+          aqiEl.textContent = aqi;
+          const cat = aqiCategory(aqi);
+          if (aqiLabelEl) {
+            aqiLabelEl.textContent = cat.label;
+            aqiLabelEl.style.color = cat.color;
+          }
+        } else {
+          aqiEl.textContent = '--';
+          if (aqiLabelEl) {
+            aqiLabelEl.textContent = '';
+            aqiLabelEl.style.color = '';
+          }
+              // No AQI available from Open-Meteo Air Quality API for this hour
+        }
+
+        // show retrieved time (use hourly time at nearestIdx if available)
+        const timeEl = document.getElementById('time-val');
+        if (timeEl && hourly.time && hourly.time[nearestIdx]) {
+          const now = new Date();
+          timeEl.textContent = now.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+          });
+        }
+
+        // Use global aqiCategory below
+    }
   }
 
   function displayHourly(hourly) {
@@ -162,7 +292,38 @@
     const parts = fullName.split(',').map(p => p.trim()).filter(Boolean);
     if (parts.length === 0) return '';
     if (parts.length === 1) return parts[0];
-    return parts[0] + ', ' + parts[parts.length - 1];
+    // Prefer the 2nd part (admin1) when available, otherwise fall back to the last part
+    if (parts.length >= 2) return parts[0] + ', ' + parts[1];
+    return parts[0];
+  }
+
+  function aqiCategory(aqiVal) {
+    if (aqiVal == null || isNaN(aqiVal)) return {label: '', color: ''};
+    if (aqiVal <= 50) return {label: 'Good', color: '#0b9b3b'};
+    if (aqiVal <= 100) return {label: 'Moderate', color: '#f0ad4e'};
+    if (aqiVal <= 150) return {label: 'Poor', color: '#f57c00'};
+    if (aqiVal <= 200) return {label: 'Very Poor', color: '#d9534f'};
+    if (aqiVal <= 300) return {label: 'Extremely Poor', color: '#7e2a7e'};
+    return {label: 'Hazardous', color: '#6b0019'};
+  }
+
+  // 🌡️ Feels-like interpretation (°C)
+  function feelsLikeCategory(temp) {
+    if (temp == null || isNaN(temp)) return { label: '', color: '' };
+    if (temp <= 26) return { label: 'Comfortable', color: '#0b9b3b' };
+    if (temp <= 32) return { label: 'Warm', color: '#f0ad4e' };
+    if (temp <= 38) return { label: 'Hot', color: '#f57c00' };
+    return { label: 'Very Hot', color: '#d9534f' };
+  }
+
+  // 🔆 UV index interpretation
+  function uvCategory(uv) {
+    if (uv == null || isNaN(uv)) return { label: '', color: '' };
+    if (uv <= 2) return { label: 'Low', color: '#0b9b3b' };
+    if (uv <= 5) return { label: 'Moderate', color: '#f0ad4e' };
+    if (uv <= 7) return { label: 'High', color: '#f57c00' };
+    if (uv <= 10) return { label: 'Very High', color: '#d9534f' };
+    return { label: 'Extreme', color: '#6b0019' };
   }
 
   function clearSuggestions(el) {

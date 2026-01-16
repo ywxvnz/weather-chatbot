@@ -14,6 +14,7 @@ html, body {
     justify-content: center;
     height: calc(100vh - 160px); /* Account for navbar and footer */
     padding: 0 1rem;
+    padding-top: .30rem;
     width: 100%;
     max-width: 100%;
     margin: 0;
