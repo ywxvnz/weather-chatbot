@@ -798,3 +798,209 @@ will it rain on January 17 2026 on Pasay?
 "No, it will not rain on January 17, 2026, in Pasay. The precipitation for the entire day is 0.0 mm."
 
 2026-01-16 23:40:15,154 - INFO - 127.0.0.1 - - [16/Jan/2026 23:40:15] "POST /api/chat HTTP/1.1" 200 -
+2026-01-17 12:28:05,300 - INFO - ============================================================
+2026-01-17 12:28:05,302 - INFO - Weather Chatbot Started
+2026-01-17 12:28:05,302 - INFO - ============================================================
+2026-01-17 12:28:07,672 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.20.10.13:5000
+2026-01-17 12:28:07,673 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-17 12:28:07,678 - INFO -  * Restarting with stat
+2026-01-17 12:28:18,589 - INFO - ============================================================
+2026-01-17 12:28:18,591 - INFO - Weather Chatbot Started
+2026-01-17 12:28:18,594 - INFO - ============================================================
+2026-01-17 12:28:20,503 - WARNING -  * Debugger is active!
+2026-01-17 12:28:20,522 - INFO -  * Debugger PIN: 664-758-930
+2026-01-17 12:28:20,670 - INFO - 127.0.0.1 - - [17/Jan/2026 12:28:20] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-17 12:28:20,994 - INFO - 
+--- User Input ---
+hello
+2026-01-17 12:28:20,995 - INFO - Selected location updated: Dasmariñas, Calabarzon
+2026-01-17 12:28:28,400 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2026-01-17 12:28:28,415 - ERROR - Gemini request error: Error code: 400 - [{'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}]
+2026-01-17 12:28:28,417 - ERROR - Unexpected error in safe_make_gemini_request
+Traceback (most recent call last):
+  File "D:\xampp\htdocs\WeatherChatbot\backend\chat_backend.py", line 119, in safe_make_gemini_request
+    response = make_gemini_request(messages, model=model)
+  File "D:\xampp\htdocs\WeatherChatbot\backend\chat_backend.py", line 50, in make_gemini_request
+    resp = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        response_format={"type": "json_object"}   # IMPORTANT
+    )
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1156, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<46 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - [{'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}]
+2026-01-17 12:28:28,803 - WARNING - Empty response from LLM on tool check. Using fallback.
+2026-01-17 12:28:28,804 - INFO - Tool selection: none
+2026-01-17 12:28:28,805 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-17 12:28:28,983 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2026-01-17 12:28:28,987 - ERROR - Gemini request error: Error code: 400 - [{'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}]
+2026-01-17 12:28:28,987 - ERROR - Unexpected error in safe_make_gemini_request
+Traceback (most recent call last):
+  File "D:\xampp\htdocs\WeatherChatbot\backend\chat_backend.py", line 119, in safe_make_gemini_request
+    response = make_gemini_request(messages, model=model)
+  File "D:\xampp\htdocs\WeatherChatbot\backend\chat_backend.py", line 50, in make_gemini_request
+    resp = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        response_format={"type": "json_object"}   # IMPORTANT
+    )
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1156, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<46 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - [{'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}]
+2026-01-17 12:28:28,996 - WARNING - Empty or invalid assistant reply. Using fallback.
+2026-01-17 12:28:29,012 - INFO - --- Assistant Reply ---
+No response from assistant.
+
+2026-01-17 12:28:29,018 - INFO - 127.0.0.1 - - [17/Jan/2026 12:28:29] "POST /api/chat HTTP/1.1" 200 -
+2026-01-17 12:28:30,622 - INFO - 127.0.0.1 - - [17/Jan/2026 12:28:30] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-17 12:28:30,858 - INFO - 
+--- User Input ---
+hello
+2026-01-17 12:28:30,859 - INFO - Selected location updated: Dasmariñas, Calabarzon
+2026-01-17 12:28:31,058 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2026-01-17 12:28:31,065 - ERROR - Gemini request error: Error code: 400 - [{'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}]
+2026-01-17 12:28:31,075 - ERROR - Unexpected error in safe_make_gemini_request
+Traceback (most recent call last):
+  File "D:\xampp\htdocs\WeatherChatbot\backend\chat_backend.py", line 119, in safe_make_gemini_request
+    response = make_gemini_request(messages, model=model)
+  File "D:\xampp\htdocs\WeatherChatbot\backend\chat_backend.py", line 50, in make_gemini_request
+    resp = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        response_format={"type": "json_object"}   # IMPORTANT
+    )
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1156, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<46 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - [{'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}]
+2026-01-17 12:28:31,105 - WARNING - Empty response from LLM on tool check. Using fallback.
+2026-01-17 12:28:31,113 - INFO - Tool selection: none
+2026-01-17 12:28:31,121 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-17 12:28:31,390 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 400 Bad Request"
+2026-01-17 12:28:31,397 - ERROR - Gemini request error: Error code: 400 - [{'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}]
+2026-01-17 12:28:31,398 - ERROR - Unexpected error in safe_make_gemini_request
+Traceback (most recent call last):
+  File "D:\xampp\htdocs\WeatherChatbot\backend\chat_backend.py", line 119, in safe_make_gemini_request
+    response = make_gemini_request(messages, model=model)
+  File "D:\xampp\htdocs\WeatherChatbot\backend\chat_backend.py", line 50, in make_gemini_request
+    resp = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        response_format={"type": "json_object"}   # IMPORTANT
+    )
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1156, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<46 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Andrea Klein\AppData\Local\Programs\Python\Python314\Lib\site-packages\openai\_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - [{'error': {'code': 400, 'message': 'API key expired. Please renew the API key.', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.ErrorInfo', 'reason': 'API_KEY_INVALID', 'domain': 'googleapis.com', 'metadata': {'service': 'generativelanguage.googleapis.com'}}, {'@type': 'type.googleapis.com/google.rpc.LocalizedMessage', 'locale': 'en-US', 'message': 'API key expired. Please renew the API key.'}]}}]
+2026-01-17 12:28:31,420 - WARNING - Empty or invalid assistant reply. Using fallback.
+2026-01-17 12:28:31,430 - INFO - --- Assistant Reply ---
+No response from assistant.
+
+2026-01-17 12:28:31,433 - INFO - 127.0.0.1 - - [17/Jan/2026 12:28:31] "POST /api/chat HTTP/1.1" 200 -
+2026-01-17 12:29:37,675 - INFO - ============================================================
+2026-01-17 12:29:37,675 - INFO - Weather Chatbot Started
+2026-01-17 12:29:37,676 - INFO - ============================================================
+2026-01-17 12:29:39,194 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.20.10.13:5000
+2026-01-17 12:29:39,194 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-17 12:29:39,203 - INFO -  * Restarting with stat
+2026-01-17 12:29:49,902 - INFO - ============================================================
+2026-01-17 12:29:49,902 - INFO - Weather Chatbot Started
+2026-01-17 12:29:49,903 - INFO - ============================================================
+2026-01-17 12:29:51,322 - WARNING -  * Debugger is active!
+2026-01-17 12:29:51,349 - INFO -  * Debugger PIN: 664-758-930
+2026-01-17 12:29:51,457 - INFO - 127.0.0.1 - - [17/Jan/2026 12:29:51] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-17 12:29:51,465 - INFO - 
+--- User Input ---
+hello
+2026-01-17 12:29:51,466 - INFO - Selected location updated: Dasmariñas, Calabarzon
+2026-01-17 12:29:58,411 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-17 12:29:58,513 - INFO - Tool selected: none
+2026-01-17 12:29:58,513 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-17 12:30:01,070 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-17 12:30:01,081 - INFO - --- Assistant Reply ---
+{
+"response": "Hello there! How can I help you today?"
+}
+
+2026-01-17 12:30:01,088 - INFO - 127.0.0.1 - - [17/Jan/2026 12:30:01] "POST /api/chat HTTP/1.1" 200 -
+2026-01-17 12:30:09,112 - INFO - 127.0.0.1 - - [17/Jan/2026 12:30:09] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-17 12:30:09,366 - INFO - 
+--- User Input ---
+whats the weather today
+2026-01-17 12:30:09,368 - INFO - Selected location updated: Dasmariñas, Calabarzon
+2026-01-17 12:30:11,617 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-17 12:30:11,629 - INFO - Tool selected: get_current_weather
+2026-01-17 12:30:11,630 - INFO - Executing tool: get_current_weather
+2026-01-17 12:30:11,633 - INFO - Location resolved from selected_location: Dasmariñas, Calabarzon
+2026-01-17 12:30:11,636 - INFO - Getting current weather for Dasmariñas, Calabarzon (14.32944, 120.93667)
+2026-01-17 12:30:13,578 - INFO - Current weather result: {'location': {'latitude': 14.32944, 'longitude': 120.93667, 'name': 'Dasmariñas, Calabarzon'}, 'current_weather': {'time': '2026-01-17T04:30', 'interval': 900, 'temperature': 25.5, 'windspeed': 7.2, 'winddirection': 360, 'is_day': 1, 'weathercode': 3}}
+2026-01-17 12:30:13,579 - INFO - Tool result: {'location': {'latitude': 14.32944, 'longitude': 120.93667, 'name': 'Dasmariñas, Calabarzon'}, 'current_weather': {'time': '2026-01-17T04:30', 'interval': 900, 'temperature': 25.5, 'windspeed': 7.2, '...
+2026-01-17 12:30:16,019 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-17 12:30:16,026 - INFO - --- Assistant Reply ---
+{'response': 'The current weather in Dasmariñas, Calabarzon at 4:30 AM on January 17, 2026 is 25.5 degrees Celsius. The wind speed is 7.2 km/h, blowing from the North. It is partly cloudy.'}
+
+2026-01-17 12:30:16,029 - INFO - 127.0.0.1 - - [17/Jan/2026 12:30:16] "POST /api/chat HTTP/1.1" 200 -
