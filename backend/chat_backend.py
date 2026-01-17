@@ -50,6 +50,7 @@ def make_gemini_request(messages, model="gemini-2.5-flash"):
     resp = client.chat.completions.create(
         model=model,
         messages=messages,
+        response_format={"type": "json_object"}   # IMPORTANT
     )
     return resp.choices[0].message.content
 
@@ -406,21 +407,41 @@ def chatbot_reply(user_input, selected_location=None):
     tool_check_prompt = messages.copy()
 
     tool_check_prompt.append({
-        "role": "system",
-        "content": (
-            "You are a tool-selection engine. "
-            "You MUST respond in valid JSON only. "
-            "No markdown. No code. No extra text. "
-            "If the user mentions a city or location in their query, include it in the arguments as {\"city\":\"CityName\"}. "
-            "If no city is mentioned, leave arguments empty. "
-            "Example output if city mentioned:\n"
-            "{\"tool\":\"get_current_weather\",\"arguments\":{\"city\":\"Pasay\"}}\n"
-            "Example output if no city mentioned:\n"
-            "{\"tool\":\"get_current_weather\",\"arguments\":{}}\n"
-            "If no tool is needed, reply exactly:\n"
-            "none"
-        )
-    })
+    "role": "system",
+    "content": (
+        "You are a tool-selection engine. "
+        "You MUST reply in valid JSON only. "
+        "No markdown. No explanations. No extra text. "
+
+        "Choose ONLY one of these tool names exactly:\n"
+        "get_current_weather\n"
+        "get_weather_forecast\n"
+        "get_weather_by_date\n"
+        "get_weather_by_datetime\n"
+        "get_tools_list\n"
+        "none\n"
+
+        "Rules:\n"
+        "- If the user asks for current weather → use get_current_weather.\n"
+        "- If the user asks for weather forecast without a specific date → use get_weather_forecast.\n"
+        "- If the user asks for weather on a specific date → use get_weather_by_date and include {\"date\":\"YYYY-MM-DD\"}.\n"
+        "- If the user asks for weather on a specific date and time → use get_weather_by_datetime and include "
+        "{\"date\":\"YYYY-MM-DD\",\"time\":\"HH:MM\"}.\n"
+        "- If the user mentions a city, include {\"city\":\"CityName\"} in arguments.\n"
+        "- If no city is mentioned, omit the city field.\n"
+        "- If no tool applies → return {\"tool\":\"none\",\"arguments\":{}}.\n"
+
+        "Example (current weather with city):\n"
+        "{\"tool\":\"get_current_weather\",\"arguments\":{\"city\":\"Pasay\"}}\n"
+
+        "Example (date-based weather):\n"
+        "{\"tool\":\"get_weather_by_date\",\"arguments\":{\"city\":\"Pasay\",\"date\":\"2026-02-14\"}}\n"
+
+        "Example (no tool):\n"
+        "{\"tool\":\"none\",\"arguments\":{}}"
+    )
+})
+
 
     tool_check_prompt = filter_valid_messages(tool_check_prompt)
 
@@ -467,7 +488,15 @@ def chatbot_reply(user_input, selected_location=None):
                 })
 
                 formatted_reply = safe_make_gemini_request(format_prompt)
-                
+                # Because response_format forces JSON, parse it
+                try:
+                    parsed = json.loads(formatted_reply)
+                    # If model returned a weather_summary field, use it
+                    if isinstance(parsed, dict):
+                        formatted_reply = parsed.get("weather_summary") or parsed.get("reply") or str(parsed)
+                except:
+                    pass
+
                 # Handle quota exceeded or empty response
                 if formatted_reply == "__QUOTA_EXCEEDED__":
                     logger.error("Quota exceeded on formatted reply request.")
@@ -652,7 +681,7 @@ def tools_router(tool, message, selected_location=None):
                     selected_location.get("name"))
 
         # 5️⃣ fallback to last resolved location memory
-        from __main__ import last_location_memory
+        global last_location_memory
         if last_location_memory:
             logger.info(f"Location resolved from memory: {last_location_memory.get('name')}")
             return (last_location_memory.get("latitude"),

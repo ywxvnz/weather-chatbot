@@ -141,3 +141,660 @@ will it rain in Imus on January 16, 2026
 I am sorry, I cannot directly answer if it will rain in Imus on January 16, 2026. The get_weather_by_date tool provides general weather conditions for a specific date, but it does not specify if it will rain. However, I can provide the general weather conditions for Imus on January 16, 2026, if you would like.
 
 2026-01-16 22:14:18,260 - INFO - 127.0.0.1 - - [16/Jan/2026 22:14:18] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 22:52:46,641 - INFO - ============================================================
+2026-01-16 22:52:46,641 - INFO - Weather Chatbot Started
+2026-01-16 22:52:46,641 - INFO - ============================================================
+2026-01-16 22:52:48,315 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.59:5000
+2026-01-16 22:52:48,316 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-16 22:52:48,319 - INFO -  * Restarting with stat
+2026-01-16 22:52:49,717 - INFO - ============================================================
+2026-01-16 22:52:49,718 - INFO - Weather Chatbot Started
+2026-01-16 22:52:49,718 - INFO - ============================================================
+2026-01-16 22:52:49,949 - WARNING -  * Debugger is active!
+2026-01-16 22:52:49,959 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 22:53:10,031 - INFO - 127.0.0.1 - - [16/Jan/2026 22:53:10] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 22:53:10,295 - INFO - 
+--- User Input ---
+What will the weather be tomorrow in Imus?
+2026-01-16 22:53:10,295 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 22:53:13,680 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:53:13,706 - INFO - Tool selected: get_current_weather
+2026-01-16 22:53:13,707 - INFO - Executing tool: get_current_weather
+2026-01-16 22:53:14,845 - INFO - Location geocoded - City: Imus, Lat: 14.42972, Lon: 120.93667
+2026-01-16 22:53:14,846 - INFO - Getting current weather for Imus (14.42972, 120.93667)
+2026-01-16 22:53:15,783 - INFO - Current weather result: {'location': {'latitude': 14.42972, 'longitude': 120.93667, 'name': 'Imus'}, 'current_weather': {'time': '2026-01-16T14:45', 'interval': 900, 'temperature': 25.6, 'windspeed': 4.3, 'winddirection': 138, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 22:53:15,783 - INFO - Tool result: {'location': {'latitude': 14.42972, 'longitude': 120.93667, 'name': 'Imus'}, 'current_weather': {'time': '2026-01-16T14:45', 'interval': 900, 'temperature': 25.6, 'windspeed': 4.3, 'winddirection': 13...
+2026-01-16 22:53:19,836 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:53:19,840 - INFO - --- Assistant Reply ---
+In Imus, the current weather as of 2026-01-16 at 14:45 is 25.6 degrees Celsius with a wind speed of 4.3 m/s from a direction of 138 degrees. It is currently nighttime, and the weather is cloudy.
+
+2026-01-16 22:53:19,842 - INFO - 127.0.0.1 - - [16/Jan/2026 22:53:19] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 22:53:52,375 - INFO - 127.0.0.1 - - [16/Jan/2026 22:53:52] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 22:53:52,634 - INFO - 
+--- User Input ---
+what will be the weather in Imus on January 17, 2026
+2026-01-16 22:53:52,634 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 22:53:57,587 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:53:57,597 - INFO - Tool selected: get_forecast_weather
+2026-01-16 22:53:57,597 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 22:54:01,146 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:54:01,155 - WARNING - Assistant reply contains raw code. Sanitizing before sending to frontend.
+2026-01-16 22:54:01,156 - INFO - --- Assistant Reply ---
+The assistant produced a code-like response which was sanitized.
+
+2026-01-16 22:54:01,157 - INFO - 127.0.0.1 - - [16/Jan/2026 22:54:01] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 22:55:42,375 - INFO - 127.0.0.1 - - [16/Jan/2026 22:55:42] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 22:55:42,637 - INFO - 
+--- User Input ---
+hello
+2026-01-16 22:55:42,637 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 22:55:44,414 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:55:44,414 - INFO - Tool selected: get_current_weather
+2026-01-16 22:55:44,414 - INFO - Executing tool: get_current_weather
+2026-01-16 22:55:44,414 - INFO - Location resolved from selected_location: Pasay, National Capital Region
+2026-01-16 22:55:44,414 - INFO - Getting current weather for Pasay, National Capital Region (14.53748, 121.00144)
+2026-01-16 22:55:45,375 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T14:45', 'interval': 900, 'temperature': 27.2, 'windspeed': 2.9, 'winddirection': 353, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 22:55:45,375 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T14:45', 'interval': 900, 'temperature': 27.2, 'windspeed'...
+2026-01-16 22:55:47,635 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:55:47,638 - INFO - --- Assistant Reply ---
+The current weather in Pasay, National Capital Region as of January 16, 2026, at 2:45 PM is 27.2 degrees Celsius. The wind speed is 2.9 m/s from a direction of 353 degrees. It is currently cloudy and nighttime.
+
+2026-01-16 22:55:47,639 - INFO - 127.0.0.1 - - [16/Jan/2026 22:55:47] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 22:56:12,406 - INFO - 127.0.0.1 - - [16/Jan/2026 22:56:12] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 22:56:12,665 - INFO - 
+--- User Input ---
+what is the weather in Imus on January 17, 2026
+2026-01-16 22:56:12,665 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 22:56:15,614 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:56:15,620 - INFO - Tool selected: get_current_weather
+2026-01-16 22:56:15,621 - INFO - Executing tool: get_current_weather
+2026-01-16 22:56:16,628 - INFO - Location geocoded - City: Imus, Lat: 14.42972, Lon: 120.93667
+2026-01-16 22:56:16,629 - INFO - Getting current weather for Imus (14.42972, 120.93667)
+2026-01-16 22:56:17,538 - INFO - Current weather result: {'location': {'latitude': 14.42972, 'longitude': 120.93667, 'name': 'Imus'}, 'current_weather': {'time': '2026-01-16T14:45', 'interval': 900, 'temperature': 25.6, 'windspeed': 4.3, 'winddirection': 138, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 22:56:17,538 - INFO - Tool result: {'location': {'latitude': 14.42972, 'longitude': 120.93667, 'name': 'Imus'}, 'current_weather': {'time': '2026-01-16T14:45', 'interval': 900, 'temperature': 25.6, 'windspeed': 4.3, 'winddirection': 13...
+2026-01-16 22:56:22,142 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:56:22,143 - INFO - --- Assistant Reply ---
+In Imus, as of January 16, 2026, at 2:45 PM, the temperature is 25.6 degrees Celsius. The wind speed is 4.3 m/s from a direction of 138 degrees. It is currently nighttime and cloudy.
+
+2026-01-16 22:56:22,147 - INFO - 127.0.0.1 - - [16/Jan/2026 22:56:22] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 22:57:00,493 - INFO - 127.0.0.1 - - [16/Jan/2026 22:57:00] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 22:57:00,743 - INFO - 
+--- User Input ---
+hi
+2026-01-16 22:57:00,743 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 22:57:02,394 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:57:02,407 - INFO - Tool selection: none
+2026-01-16 22:57:02,409 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 22:57:05,240 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:57:05,255 - INFO - --- Assistant Reply ---
+The current weather in Pasay, National Capital Region as of January 16, 2026, at 2:45 PM is 27.2 degrees Celsius. The wind speed is 2.9 m/s from a direction of 353 degrees. It is currently cloudy and nighttime. How can I help you today?
+
+2026-01-16 22:57:05,257 - INFO - 127.0.0.1 - - [16/Jan/2026 22:57:05] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 22:57:28,668 - INFO - 127.0.0.1 - - [16/Jan/2026 22:57:28] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 22:57:28,981 - INFO - 
+--- User Input ---
+what is the weather in Pasay on January 26, 2026
+2026-01-16 22:57:28,981 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 22:57:30,559 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 22:57:30,561 - INFO - Tool selected: get_current_weather
+2026-01-16 22:57:30,562 - INFO - Executing tool: get_current_weather
+2026-01-16 22:57:31,512 - INFO - Location geocoded - City: Pasay, Lat: 14.53748, Lon: 121.00144
+2026-01-16 22:57:31,513 - INFO - Getting current weather for Pasay (14.53748, 121.00144)
+2026-01-16 22:57:32,405 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay'}, 'current_weather': {'time': '2026-01-16T15:00', 'interval': 900, 'temperature': 27.2, 'windspeed': 4.0, 'winddirection': 355, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 22:57:32,407 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay'}, 'current_weather': {'time': '2026-01-16T15:00', 'interval': 900, 'temperature': 27.2, 'windspeed': 4.0, 'winddirection': 3...
+2026-01-16 22:57:32,737 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 22:57:32,738 - INFO - Retrying request to /chat/completions in 0.452442 seconds
+2026-01-16 22:57:33,623 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 22:57:33,623 - INFO - Retrying request to /chat/completions in 0.786425 seconds
+2026-01-16 22:57:34,793 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 22:57:34,793 - ERROR - Gemini request error: Error code: 429 - [{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 13.624383059s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '13s'}]}}]
+2026-01-16 22:57:34,793 - WARNING - Quota or rate limit exceeded.
+2026-01-16 22:57:34,793 - ERROR - Quota exceeded on formatted reply request.
+2026-01-16 22:57:34,793 - INFO - 127.0.0.1 - - [16/Jan/2026 22:57:34] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:03:51,537 - INFO - ============================================================
+2026-01-16 23:03:51,537 - INFO - Weather Chatbot Started
+2026-01-16 23:03:51,537 - INFO - ============================================================
+2026-01-16 23:04:03,500 - INFO - ============================================================
+2026-01-16 23:04:03,500 - INFO - Weather Chatbot Started
+2026-01-16 23:04:03,500 - INFO - ============================================================
+2026-01-16 23:04:04,988 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.59:5000
+2026-01-16 23:04:04,988 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-16 23:04:04,988 - INFO -  * Restarting with stat
+2026-01-16 23:04:05,998 - INFO - ============================================================
+2026-01-16 23:04:05,998 - INFO - Weather Chatbot Started
+2026-01-16 23:04:05,999 - INFO - ============================================================
+2026-01-16 23:04:06,152 - WARNING -  * Debugger is active!
+2026-01-16 23:04:06,163 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:04:16,139 - INFO -  * Detected change in 'c:\\xampp\\htdocs\\WeatherChatbot\\backend\\chat_backend.py', reloading
+2026-01-16 23:04:16,350 - INFO -  * Restarting with stat
+2026-01-16 23:04:17,592 - INFO - ============================================================
+2026-01-16 23:04:17,592 - INFO - Weather Chatbot Started
+2026-01-16 23:04:17,592 - INFO - ============================================================
+2026-01-16 23:04:17,806 - WARNING -  * Debugger is active!
+2026-01-16 23:04:17,822 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:04:25,520 - INFO - 127.0.0.1 - - [16/Jan/2026 23:04:25] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:04:25,782 - INFO - 
+--- User Input ---
+hello
+2026-01-16 23:04:25,782 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:04:28,003 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:04:28,011 - INFO - Tool selected: send_text
+2026-01-16 23:04:28,011 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:04:29,555 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:04:29,555 - INFO - --- Assistant Reply ---
+Hello! How can I help you with the weather today?
+
+2026-01-16 23:04:29,570 - INFO - 127.0.0.1 - - [16/Jan/2026 23:04:29] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:04:42,971 - INFO - 127.0.0.1 - - [16/Jan/2026 23:04:42] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:04:43,210 - INFO - 
+--- User Input ---
+what is the weather today?
+2026-01-16 23:04:43,210 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:04:44,513 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:04:44,516 - INFO - Tool selected: get_current_weather
+2026-01-16 23:04:44,517 - INFO - Executing tool: get_current_weather
+2026-01-16 23:04:44,517 - INFO - Location resolved from selected_location: Pasay, National Capital Region
+2026-01-16 23:04:44,517 - INFO - Getting current weather for Pasay, National Capital Region (14.53748, 121.00144)
+2026-01-16 23:04:45,534 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:00', 'interval': 900, 'temperature': 27.2, 'windspeed': 4.0, 'winddirection': 355, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 23:04:45,534 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:00', 'interval': 900, 'temperature': 27.2, 'windspeed'...
+2026-01-16 23:04:54,424 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:04:54,440 - INFO - --- Assistant Reply ---
+The current weather in Pasay, National Capital Region as of 3:00 PM on January 16, 2026, is 27.2 degrees Celsius. Winds are blowing at 4.0 km/h from a direction of 355 degrees. It is currently nighttime, and the weather conditions are indicated by weather code 3.
+
+2026-01-16 23:04:54,440 - INFO - 127.0.0.1 - - [16/Jan/2026 23:04:54] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:05:35,507 - INFO - 127.0.0.1 - - [16/Jan/2026 23:05:35] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:05:35,776 - INFO - 
+--- User Input ---
+what is the weather on February 14, 2026 in Pasay?
+2026-01-16 23:05:35,776 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:05:37,879 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:05:37,879 - INFO - Tool selected: get_hourly_forecast
+2026-01-16 23:05:37,879 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:05:39,417 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:05:39,417 - WARNING - Assistant reply contains raw code. Sanitizing before sending to frontend.
+2026-01-16 23:05:39,417 - INFO - --- Assistant Reply ---
+The assistant produced a code-like response which was sanitized.
+
+2026-01-16 23:05:39,417 - INFO - 127.0.0.1 - - [16/Jan/2026 23:05:39] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:08:44,451 - INFO -  * Detected change in 'c:\\xampp\\htdocs\\WeatherChatbot\\backend\\chat_backend.py', reloading
+2026-01-16 23:08:44,801 - INFO -  * Restarting with stat
+2026-01-16 23:08:46,232 - INFO - ============================================================
+2026-01-16 23:08:46,233 - INFO - Weather Chatbot Started
+2026-01-16 23:08:46,233 - INFO - ============================================================
+2026-01-16 23:08:46,467 - WARNING -  * Debugger is active!
+2026-01-16 23:08:46,477 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:08:49,483 - INFO -  * Detected change in 'c:\\xampp\\htdocs\\WeatherChatbot\\backend\\chat_backend.py', reloading
+2026-01-16 23:08:49,882 - INFO -  * Restarting with stat
+2026-01-16 23:12:29,131 - INFO - ============================================================
+2026-01-16 23:12:29,132 - INFO - Weather Chatbot Started
+2026-01-16 23:12:29,132 - INFO - ============================================================
+2026-01-16 23:12:30,674 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.59:5000
+2026-01-16 23:12:30,674 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-16 23:12:30,674 - INFO -  * Restarting with stat
+2026-01-16 23:12:31,794 - INFO - ============================================================
+2026-01-16 23:12:31,794 - INFO - Weather Chatbot Started
+2026-01-16 23:12:31,794 - INFO - ============================================================
+2026-01-16 23:12:31,995 - WARNING -  * Debugger is active!
+2026-01-16 23:12:32,006 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:12:44,199 - INFO - 127.0.0.1 - - [16/Jan/2026 23:12:44] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:12:44,460 - INFO - 
+--- User Input ---
+hello
+2026-01-16 23:12:44,460 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:12:46,852 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:12:46,866 - INFO - Tool selected: none
+2026-01-16 23:12:46,866 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:12:48,246 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:12:48,246 - INFO - --- Assistant Reply ---
+"Hello! How can I help you today?"
+
+2026-01-16 23:12:48,246 - INFO - 127.0.0.1 - - [16/Jan/2026 23:12:48] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:13:09,913 - INFO - 127.0.0.1 - - [16/Jan/2026 23:13:09] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:13:10,179 - INFO - 
+--- User Input ---
+what is the weather in Pasay on February 14, 2026?
+2026-01-16 23:13:10,179 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:13:11,901 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:13:11,905 - INFO - Tool selected: get_weather_by_date
+2026-01-16 23:13:11,905 - INFO - Executing tool: get_weather_by_date
+2026-01-16 23:13:12,934 - INFO - Location geocoded - City: Pasay, Lat: 14.53748, Lon: 121.00144
+2026-01-16 23:13:12,939 - INFO - Getting weather for Pasay on 2026-02-14
+2026-01-16 23:13:13,816 - WARNING - No forecast data for 2026-02-14
+2026-01-16 23:13:13,816 - INFO - Tool result: {'error': 'No forecast data for 2026-02-14.'}...
+2026-01-16 23:13:15,413 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:13:15,430 - INFO - --- Assistant Reply ---
+"I am sorry, but I do not have weather forecast data for February 14, 2026, for Pasay."
+
+2026-01-16 23:13:15,430 - INFO - 127.0.0.1 - - [16/Jan/2026 23:13:15] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:14:04,163 - INFO - 127.0.0.1 - - [16/Jan/2026 23:14:04] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:14:04,411 - INFO - 
+--- User Input ---
+what is the weather in Pasay on January 17, 2026?
+2026-01-16 23:14:04,412 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:14:06,633 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:14:06,639 - INFO - Tool selected: get_weather_by_date
+2026-01-16 23:14:06,639 - INFO - Executing tool: get_weather_by_date
+2026-01-16 23:14:07,565 - INFO - Location geocoded - City: Pasay, Lat: 14.53748, Lon: 121.00144
+2026-01-16 23:14:07,570 - INFO - Getting weather for Pasay on 2026-01-17
+2026-01-16 23:14:08,438 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay'}, 'date': '2026-01-17', 'weather': {'time': ['2026-01-17T00:00', '2026-01-17T01:00', '2026-01-17T02:00', '2026-01-17T03:00',...
+2026-01-16 23:14:12,112 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:14:12,117 - INFO - --- Assistant Reply ---
+"On January 17, 2026, in Pasay, the temperature will range from 24.4 C to 27.5 C. There will be no precipitation throughout the day. The weather will be partly cloudy for most of the day, changing to fair and clear sky conditions in the evening and overnight."
+
+2026-01-16 23:14:12,117 - INFO - 127.0.0.1 - - [16/Jan/2026 23:14:12] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:14:45,971 - INFO - 127.0.0.1 - - [16/Jan/2026 23:14:45] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:14:46,228 - INFO - 
+--- User Input ---
+what is the weather today?
+2026-01-16 23:14:46,228 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:14:48,140 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:14:48,157 - INFO - Tool selected: get_current_weather
+2026-01-16 23:14:48,157 - INFO - Executing tool: get_current_weather
+2026-01-16 23:14:48,161 - INFO - Location resolved from selected_location: Pasay, National Capital Region
+2026-01-16 23:14:48,161 - INFO - Getting current weather for Pasay, National Capital Region (14.53748, 121.00144)
+2026-01-16 23:14:49,037 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:15', 'interval': 900, 'temperature': 27.1, 'windspeed': 5.4, 'winddirection': 356, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 23:14:49,037 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:15', 'interval': 900, 'temperature': 27.1, 'windspeed'...
+2026-01-16 23:14:51,433 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:14:51,436 - INFO - --- Assistant Reply ---
+"Currently in Pasay, National Capital Region, as of 3:15 PM on January 16, 2026, the temperature is 27.1 degrees Celsius. The wind speed is 5.4 km/h from the North (356 degrees). The weather is overcast or partly cloudy, and it is nighttime."
+
+2026-01-16 23:14:51,438 - INFO - 127.0.0.1 - - [16/Jan/2026 23:14:51] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:15:49,271 - INFO - 127.0.0.1 - - [16/Jan/2026 23:15:49] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:15:49,535 - INFO - 
+--- User Input ---
+what lifestyle advice can you give me given the weather
+2026-01-16 23:15:49,535 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:15:51,646 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:15:51,649 - INFO - Tool selected: none
+2026-01-16 23:15:51,649 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:15:55,476 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:15:55,492 - INFO - --- Assistant Reply ---
+"Given the current weather in Pasay, where it's 27.1 degrees Celsius, overcast or partly cloudy, and nighttime with a light breeze of 5.4 km/h:  \n\n- It's a warm night, so opt for light and breathable clothing if you're heading out or staying in.\n- Even though it's nighttime, it's still warm, so make sure to stay hydrated.\n- The light breeze might make it pleasant to sit outdoors if you have a comfortable spot, but be mindful of the cloud cover.\n- Since it's nighttime and partly cloudy, it's a good evening for indoor activities or a relaxed stroll if you enjoy warm weather walks."
+
+2026-01-16 23:15:55,495 - INFO - 127.0.0.1 - - [16/Jan/2026 23:15:55] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:16:48,836 - INFO - 127.0.0.1 - - [16/Jan/2026 23:16:48] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:16:49,087 - INFO - 
+--- User Input ---
+give me jokes about dinosaurs
+2026-01-16 23:16:49,088 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:16:50,627 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:16:50,633 - INFO - Tool selected: none
+2026-01-16 23:16:50,634 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:16:52,163 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:16:52,175 - INFO - --- Assistant Reply ---
+"I'm sorry, I cannot provide jokes about dinosaurs. My purpose is to provide weather and lifestyle guidance based on weather conditions."
+
+2026-01-16 23:16:52,175 - INFO - 127.0.0.1 - - [16/Jan/2026 23:16:52] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:20:44,382 - INFO - 127.0.0.1 - - [16/Jan/2026 23:20:44] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:20:44,661 - INFO - 
+--- User Input ---
+hello
+2026-01-16 23:20:44,661 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:20:47,042 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:20:47,051 - INFO - Tool selected: none
+2026-01-16 23:20:47,051 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:20:48,399 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:20:48,399 - INFO - --- Assistant Reply ---
+"Hello! How can I help you today?"
+
+2026-01-16 23:20:48,399 - INFO - 127.0.0.1 - - [16/Jan/2026 23:20:48] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:20:57,652 - INFO - 127.0.0.1 - - [16/Jan/2026 23:20:57] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:20:57,916 - INFO - 
+--- User Input ---
+what is the weather today?
+2026-01-16 23:20:57,916 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:20:59,624 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:20:59,626 - INFO - Tool selected: get_current_weather
+2026-01-16 23:20:59,627 - INFO - Executing tool: get_current_weather
+2026-01-16 23:20:59,627 - INFO - Location resolved from selected_location: Pasay, National Capital Region
+2026-01-16 23:20:59,627 - INFO - Getting current weather for Pasay, National Capital Region (14.53748, 121.00144)
+2026-01-16 23:21:00,505 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:15', 'interval': 900, 'temperature': 27.1, 'windspeed': 5.4, 'winddirection': 356, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 23:21:00,505 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:15', 'interval': 900, 'temperature': 27.1, 'windspeed'...
+2026-01-16 23:21:00,845 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:21:00,847 - INFO - Retrying request to /chat/completions in 0.441588 seconds
+2026-01-16 23:21:01,629 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:21:01,631 - INFO - Retrying request to /chat/completions in 0.803971 seconds
+2026-01-16 23:21:02,783 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:21:02,785 - ERROR - Gemini request error: Error code: 429 - [{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 45.600876083s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '45s'}]}}]
+2026-01-16 23:21:02,786 - WARNING - Quota or rate limit exceeded.
+2026-01-16 23:21:02,786 - ERROR - Quota exceeded on formatted reply request.
+2026-01-16 23:21:02,787 - INFO - 127.0.0.1 - - [16/Jan/2026 23:21:02] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:21:59,313 - INFO - 127.0.0.1 - - [16/Jan/2026 23:21:59] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:21:59,568 - INFO - 
+--- User Input ---
+hello
+2026-01-16 23:21:59,568 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:22:00,530 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:22:00,530 - INFO - Retrying request to /chat/completions in 0.493585 seconds
+2026-01-16 23:22:01,343 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:22:01,343 - INFO - Retrying request to /chat/completions in 0.906131 seconds
+2026-01-16 23:22:02,592 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:22:02,593 - ERROR - Gemini request error: Error code: 429 - [{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 45.782925753s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.5-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '45s'}]}}]
+2026-01-16 23:22:02,594 - WARNING - Quota or rate limit exceeded.
+2026-01-16 23:22:02,595 - ERROR - Quota exceeded on tool check request.
+2026-01-16 23:22:02,596 - INFO - 127.0.0.1 - - [16/Jan/2026 23:22:02] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:22:13,604 - INFO - ============================================================
+2026-01-16 23:22:13,604 - INFO - Weather Chatbot Started
+2026-01-16 23:22:13,606 - INFO - ============================================================
+2026-01-16 23:22:15,182 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.59:5000
+2026-01-16 23:22:15,183 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-16 23:22:15,185 - INFO -  * Restarting with stat
+2026-01-16 23:22:16,227 - INFO - ============================================================
+2026-01-16 23:22:16,227 - INFO - Weather Chatbot Started
+2026-01-16 23:22:16,229 - INFO - ============================================================
+2026-01-16 23:22:16,387 - WARNING -  * Debugger is active!
+2026-01-16 23:22:16,397 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:22:27,022 - INFO - 127.0.0.1 - - [16/Jan/2026 23:22:27] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:22:27,272 - INFO - 
+--- User Input ---
+hi
+2026-01-16 23:22:27,276 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:22:29,794 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:22:29,804 - INFO - Tool selected: none
+2026-01-16 23:22:29,804 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:22:31,388 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:22:31,391 - INFO - --- Assistant Reply ---
+"Hello! I am your weather and lifestyle assistant. I can help you with weather information for Pasay, National Capital Region. How can I help you today?"
+
+2026-01-16 23:22:31,394 - INFO - 127.0.0.1 - - [16/Jan/2026 23:22:31] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:22:58,013 - INFO - 127.0.0.1 - - [16/Jan/2026 23:22:58] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:22:58,272 - INFO - 
+--- User Input ---
+what is the weather today?
+2026-01-16 23:22:58,272 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:23:00,042 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:23:00,043 - INFO - Tool selected: get_current_weather
+2026-01-16 23:23:00,045 - INFO - Executing tool: get_current_weather
+2026-01-16 23:23:00,045 - INFO - Location resolved from selected_location: Pasay, National Capital Region
+2026-01-16 23:23:00,045 - INFO - Getting current weather for Pasay, National Capital Region (14.53748, 121.00144)
+2026-01-16 23:23:00,914 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:15', 'interval': 900, 'temperature': 27.1, 'windspeed': 5.4, 'winddirection': 356, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 23:23:00,914 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:15', 'interval': 900, 'temperature': 27.1, 'windspeed'...
+2026-01-16 23:23:02,944 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:23:02,955 - INFO - --- Assistant Reply ---
+{
+ "summary": "The current weather in Pasay, National Capital Region is cloudy with a temperature of 27.1 degrees Celsius. The wind speed is 5.4 km/h, blowing from the North-Northwest (356 degrees)."
+}
+
+2026-01-16 23:23:02,958 - INFO - 127.0.0.1 - - [16/Jan/2026 23:23:02] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:23:51,863 - INFO - ============================================================
+2026-01-16 23:23:51,863 - INFO - Weather Chatbot Started
+2026-01-16 23:23:51,863 - INFO - ============================================================
+2026-01-16 23:23:53,460 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.59:5000
+2026-01-16 23:23:53,460 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-16 23:23:53,460 - INFO -  * Restarting with stat
+2026-01-16 23:23:54,647 - INFO - ============================================================
+2026-01-16 23:23:54,647 - INFO - Weather Chatbot Started
+2026-01-16 23:23:54,647 - INFO - ============================================================
+2026-01-16 23:23:54,905 - WARNING -  * Debugger is active!
+2026-01-16 23:23:54,918 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:23:56,091 - INFO - 127.0.0.1 - - [16/Jan/2026 23:23:56] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:23:56,351 - INFO - 
+--- User Input ---
+hello
+2026-01-16 23:23:56,351 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:23:58,694 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:23:58,706 - INFO - Tool selected: none
+2026-01-16 23:23:58,706 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:24:00,092 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:24:00,094 - INFO - --- Assistant Reply ---
+"Hello! How can I help you today?"
+
+2026-01-16 23:24:00,097 - INFO - 127.0.0.1 - - [16/Jan/2026 23:24:00] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:24:08,384 - INFO - 127.0.0.1 - - [16/Jan/2026 23:24:08] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:24:08,633 - INFO - 
+--- User Input ---
+what is the weather today?
+2026-01-16 23:24:08,635 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:24:10,536 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:24:10,538 - INFO - Tool selected: get_current_weather
+2026-01-16 23:24:10,538 - INFO - Executing tool: get_current_weather
+2026-01-16 23:24:10,538 - INFO - Location resolved from selected_location: Pasay, National Capital Region
+2026-01-16 23:24:10,538 - INFO - Getting current weather for Pasay, National Capital Region (14.53748, 121.00144)
+2026-01-16 23:24:11,565 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:15', 'interval': 900, 'temperature': 27.1, 'windspeed': 5.4, 'winddirection': 356, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 23:24:11,565 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:15', 'interval': 900, 'temperature': 27.1, 'windspeed'...
+2026-01-16 23:24:13,414 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:24:13,414 - INFO - --- Assistant Reply ---
+"The current weather in Pasay, National Capital Region is 27.1 degrees Celsius with a wind speed of 5.4 km/h blowing from the North (356 degrees)."
+
+2026-01-16 23:24:13,414 - INFO - 127.0.0.1 - - [16/Jan/2026 23:24:13] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:24:34,546 - INFO - 127.0.0.1 - - [16/Jan/2026 23:24:34] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:24:34,802 - INFO - 
+--- User Input ---
+what is the weather in Pasay on January 18, 2026
+2026-01-16 23:24:34,804 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:24:37,111 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:24:37,115 - INFO - Tool selected: get_weather_by_date
+2026-01-16 23:24:37,116 - INFO - Executing tool: get_weather_by_date
+2026-01-16 23:24:38,093 - INFO - Location geocoded - City: Pasay, Lat: 14.53748, Lon: 121.00144
+2026-01-16 23:24:38,094 - INFO - Getting weather for Pasay on 2026-01-18
+2026-01-16 23:24:39,617 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay'}, 'date': '2026-01-18', 'weather': {'time': ['2026-01-18T00:00', '2026-01-18T01:00', '2026-01-18T02:00', '2026-01-18T03:00',...
+2026-01-16 23:24:43,404 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:24:43,404 - INFO - --- Assistant Reply ---
+{
+ "weather_summary": "On January 18, 2026, in Pasay, the weather will range from mainly clear to overcast conditions. Temperatures will vary between 24.5 degrees Celsius and 27.5 degrees Celsius throughout the day. There is no precipitation expected."
+}
+
+2026-01-16 23:24:43,404 - INFO - 127.0.0.1 - - [16/Jan/2026 23:24:43] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:26:18,109 - INFO -  * Detected change in 'c:\\xampp\\htdocs\\WeatherChatbot\\backend\\chat_backend.py', reloading
+2026-01-16 23:26:18,648 - INFO -  * Restarting with stat
+2026-01-16 23:26:34,093 - INFO - ============================================================
+2026-01-16 23:26:34,093 - INFO - Weather Chatbot Started
+2026-01-16 23:26:34,093 - INFO - ============================================================
+2026-01-16 23:26:35,539 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.59:5000
+2026-01-16 23:26:35,540 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-16 23:26:35,543 - INFO -  * Restarting with stat
+2026-01-16 23:26:36,674 - INFO - ============================================================
+2026-01-16 23:26:36,674 - INFO - Weather Chatbot Started
+2026-01-16 23:26:36,674 - INFO - ============================================================
+2026-01-16 23:26:36,934 - WARNING -  * Debugger is active!
+2026-01-16 23:26:36,950 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:26:41,366 - INFO - 127.0.0.1 - - [16/Jan/2026 23:26:41] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:26:41,627 - INFO - 
+--- User Input ---
+hello
+2026-01-16 23:26:41,627 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:26:44,306 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:26:44,318 - INFO - Tool selected: none
+2026-01-16 23:26:44,318 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:26:46,567 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:26:46,569 - INFO - --- Assistant Reply ---
+"Hello! How can I help you today?"
+
+2026-01-16 23:26:46,571 - INFO - 127.0.0.1 - - [16/Jan/2026 23:26:46] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:26:55,470 - INFO - 127.0.0.1 - - [16/Jan/2026 23:26:55] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:26:55,725 - INFO - 
+--- User Input ---
+what is the weather today?
+2026-01-16 23:26:55,725 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:26:57,648 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:26:57,648 - INFO - Tool selected: get_current_weather
+2026-01-16 23:26:57,648 - INFO - Executing tool: get_current_weather
+2026-01-16 23:26:57,648 - INFO - Location resolved from selected_location: Pasay, National Capital Region
+2026-01-16 23:26:57,648 - INFO - Getting current weather for Pasay, National Capital Region (14.53748, 121.00144)
+2026-01-16 23:26:58,908 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:30', 'interval': 900, 'temperature': 27.0, 'windspeed': 6.8, 'winddirection': 360, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 23:26:58,908 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:30', 'interval': 900, 'temperature': 27.0, 'windspeed'...
+2026-01-16 23:27:01,070 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:27:01,087 - INFO - --- Assistant Reply ---
+"The weather in Pasay, National Capital Region today at 3:30 PM is cloudy with a temperature of 27.0 degrees Celsius. The wind speed is 6.8 km/h, blowing from the North."
+
+2026-01-16 23:27:01,087 - INFO - 127.0.0.1 - - [16/Jan/2026 23:27:01] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:27:26,371 - INFO - 127.0.0.1 - - [16/Jan/2026 23:27:26] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:27:26,638 - INFO - 
+--- User Input ---
+what is the weather in Pasay on January 17, 2026
+2026-01-16 23:27:26,638 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:27:28,719 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:27:28,727 - INFO - Tool selected: get_weather_by_date
+2026-01-16 23:27:28,727 - INFO - Executing tool: get_weather_by_date
+2026-01-16 23:27:29,610 - INFO - Location geocoded - City: Pasay, Lat: 14.53748, Lon: 121.00144
+2026-01-16 23:27:29,610 - INFO - Getting weather for Pasay on 2026-01-17
+2026-01-16 23:27:30,488 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay'}, 'date': '2026-01-17', 'weather': {'time': ['2026-01-17T00:00', '2026-01-17T01:00', '2026-01-17T02:00', '2026-01-17T03:00',...
+2026-01-16 23:27:34,810 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:27:34,814 - INFO - --- Assistant Reply ---
+"The weather in Pasay on January 17, 2026, will generally be partly cloudy to overcast with temperatures ranging from 24.4 to 27.5 degrees Celsius. There is no precipitation expected on this day."
+
+2026-01-16 23:27:34,814 - INFO - 127.0.0.1 - - [16/Jan/2026 23:27:34] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:31:18,742 - INFO - 127.0.0.1 - - [16/Jan/2026 23:31:18] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:31:18,979 - INFO - 
+--- User Input ---
+can u give me joke about dinosaurs
+2026-01-16 23:31:18,979 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:31:21,088 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:31:21,092 - INFO - Tool selected: none
+2026-01-16 23:31:21,092 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:31:22,984 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:31:22,986 - INFO - --- Assistant Reply ---
+"Why did the T-Rex cross the road? Because the chickens hadn't evolved yet!"
+
+2026-01-16 23:31:22,986 - INFO - 127.0.0.1 - - [16/Jan/2026 23:31:22] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:35:20,167 - INFO - ============================================================
+2026-01-16 23:35:20,167 - INFO - Weather Chatbot Started
+2026-01-16 23:35:20,167 - INFO - ============================================================
+2026-01-16 23:35:21,824 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.59:5000
+2026-01-16 23:35:21,828 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-16 23:35:21,836 - INFO -  * Restarting with stat
+2026-01-16 23:35:23,415 - INFO - ============================================================
+2026-01-16 23:35:23,415 - INFO - Weather Chatbot Started
+2026-01-16 23:35:23,415 - INFO - ============================================================
+2026-01-16 23:35:23,643 - WARNING -  * Debugger is active!
+2026-01-16 23:35:23,663 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:35:34,925 - INFO - 127.0.0.1 - - [16/Jan/2026 23:35:34] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:35:35,194 - INFO - 
+--- User Input ---
+hi
+2026-01-16 23:35:35,194 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:35:38,676 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:35:38,695 - INFO - Tool selected: none
+2026-01-16 23:35:38,695 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:35:41,539 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:35:41,543 - INFO - --- Assistant Reply ---
+"Hello! I can provide weather information. What can I help you with today?"
+
+2026-01-16 23:35:41,543 - INFO - 127.0.0.1 - - [16/Jan/2026 23:35:41] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:35:55,197 - INFO - 127.0.0.1 - - [16/Jan/2026 23:35:55] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:35:55,511 - INFO - 
+--- User Input ---
+what is the best iphone to buy
+2026-01-16 23:35:55,512 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:35:57,720 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:35:57,724 - INFO - Tool selected: none
+2026-01-16 23:35:57,724 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:35:58,031 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:35:58,041 - INFO - Retrying request to /chat/completions in 0.408594 seconds
+2026-01-16 23:35:58,777 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:35:58,792 - INFO - Retrying request to /chat/completions in 0.976897 seconds
+2026-01-16 23:36:00,487 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-01-16 23:36:00,488 - ERROR - Gemini request error: Error code: 429 - [{'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 48.244640265s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '48s'}]}}]
+2026-01-16 23:36:00,490 - WARNING - Quota or rate limit exceeded.
+2026-01-16 23:36:00,490 - ERROR - Quota exceeded on general assistant request.
+2026-01-16 23:36:00,490 - INFO - 127.0.0.1 - - [16/Jan/2026 23:36:00] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:37:26,492 - INFO - ============================================================
+2026-01-16 23:37:26,493 - INFO - Weather Chatbot Started
+2026-01-16 23:37:26,493 - INFO - ============================================================
+2026-01-16 23:37:27,999 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.59:5000
+2026-01-16 23:37:27,999 - INFO - [33mPress CTRL+C to quit[0m
+2026-01-16 23:37:28,004 - INFO -  * Restarting with stat
+2026-01-16 23:37:29,878 - INFO - ============================================================
+2026-01-16 23:37:29,879 - INFO - Weather Chatbot Started
+2026-01-16 23:37:29,879 - INFO - ============================================================
+2026-01-16 23:37:30,125 - WARNING -  * Debugger is active!
+2026-01-16 23:37:30,138 - INFO -  * Debugger PIN: 245-935-816
+2026-01-16 23:37:45,703 - INFO - 127.0.0.1 - - [16/Jan/2026 23:37:45] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:37:45,967 - INFO - 
+--- User Input ---
+hi
+2026-01-16 23:37:45,967 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:37:48,621 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:37:48,635 - INFO - Tool selected: none
+2026-01-16 23:37:48,635 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:37:50,774 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:37:50,778 - INFO - --- Assistant Reply ---
+"Hello! I am a weather and lifestyle assistant. I can provide you with current weather, forecasts, and weather information for specific dates and times. How can I help you today?"
+
+2026-01-16 23:37:50,778 - INFO - 127.0.0.1 - - [16/Jan/2026 23:37:50] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:38:06,054 - INFO - 127.0.0.1 - - [16/Jan/2026 23:38:06] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:38:06,369 - INFO - 
+--- User Input ---
+suggest best iphone to buy this 2026
+2026-01-16 23:38:06,369 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:38:08,558 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:38:08,559 - INFO - Tool selected: none
+2026-01-16 23:38:08,561 - INFO - Using general assistant reply (no tool selected or tool failed).
+2026-01-16 23:38:10,092 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:38:10,096 - INFO - --- Assistant Reply ---
+"I am sorry, but I cannot provide recommendations for iPhones. My purpose is to assist with weather-related information and lifestyle guidance based on weather conditions."
+
+2026-01-16 23:38:10,096 - INFO - 127.0.0.1 - - [16/Jan/2026 23:38:10] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:38:49,272 - INFO - 127.0.0.1 - - [16/Jan/2026 23:38:49] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:38:49,585 - INFO - 
+--- User Input ---
+what is the weather today?
+2026-01-16 23:38:49,588 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:38:52,209 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:38:52,211 - INFO - Tool selected: get_current_weather
+2026-01-16 23:38:52,211 - INFO - Executing tool: get_current_weather
+2026-01-16 23:38:52,211 - INFO - Location resolved from selected_location: Pasay, National Capital Region
+2026-01-16 23:38:52,211 - INFO - Getting current weather for Pasay, National Capital Region (14.53748, 121.00144)
+2026-01-16 23:38:53,090 - INFO - Current weather result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:30', 'interval': 900, 'temperature': 27.0, 'windspeed': 6.8, 'winddirection': 360, 'is_day': 0, 'weathercode': 3}}
+2026-01-16 23:38:53,090 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay, National Capital Region'}, 'current_weather': {'time': '2026-01-16T15:30', 'interval': 900, 'temperature': 27.0, 'windspeed'...
+2026-01-16 23:38:57,037 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:38:57,042 - INFO - --- Assistant Reply ---
+"The current weather in Pasay, National Capital Region at 3:30 PM on January 16, 2026, is 27.0 degrees Celsius. The wind speed is 6.8 km/h from the North, and the weather is cloudy."
+
+2026-01-16 23:38:57,047 - INFO - 127.0.0.1 - - [16/Jan/2026 23:38:57] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:39:32,695 - INFO - 127.0.0.1 - - [16/Jan/2026 23:39:32] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:39:33,020 - INFO - 
+--- User Input ---
+what is the weather in Pasay on January 17, 2026
+2026-01-16 23:39:33,020 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:39:35,267 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:39:35,267 - INFO - Tool selected: get_weather_by_date
+2026-01-16 23:39:35,267 - INFO - Executing tool: get_weather_by_date
+2026-01-16 23:39:36,189 - INFO - Location geocoded - City: Pasay, Lat: 14.53748, Lon: 121.00144
+2026-01-16 23:39:36,189 - INFO - Getting weather for Pasay on 2026-01-17
+2026-01-16 23:39:37,067 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay'}, 'date': '2026-01-17', 'weather': {'time': ['2026-01-17T00:00', '2026-01-17T01:00', '2026-01-17T02:00', '2026-01-17T03:00',...
+2026-01-16 23:39:39,928 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:39:39,936 - INFO - --- Assistant Reply ---
+"On January 17, 2026, in Pasay, the temperature will range from 24.4 to 27.5 degrees Celsius. There will be no precipitation throughout the day. The weather will be mostly cloudy from midnight until late afternoon, becoming partly cloudy in the early evening, and then clear by late evening."
+
+2026-01-16 23:39:39,938 - INFO - 127.0.0.1 - - [16/Jan/2026 23:39:39] "POST /api/chat HTTP/1.1" 200 -
+2026-01-16 23:40:08,337 - INFO - 127.0.0.1 - - [16/Jan/2026 23:40:08] "OPTIONS /api/chat HTTP/1.1" 200 -
+2026-01-16 23:40:08,659 - INFO - 
+--- User Input ---
+will it rain on January 17 2026 on Pasay?
+2026-01-16 23:40:08,659 - INFO - Selected location updated: Pasay, National Capital Region
+2026-01-16 23:40:10,855 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:40:10,857 - INFO - Tool selected: get_weather_by_date
+2026-01-16 23:40:10,857 - INFO - Executing tool: get_weather_by_date
+2026-01-16 23:40:12,268 - INFO - Location geocoded - City: Pasay, Lat: 14.53748, Lon: 121.00144
+2026-01-16 23:40:12,270 - INFO - Getting weather for Pasay on 2026-01-17
+2026-01-16 23:40:13,314 - INFO - Tool result: {'location': {'latitude': 14.53748, 'longitude': 121.00144, 'name': 'Pasay'}, 'date': '2026-01-17', 'weather': {'time': ['2026-01-17T00:00', '2026-01-17T01:00', '2026-01-17T02:00', '2026-01-17T03:00',...
+2026-01-16 23:40:15,147 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/openai/chat/completions "HTTP/1.1 200 OK"
+2026-01-16 23:40:15,154 - INFO - --- Assistant Reply ---
+"No, it will not rain on January 17, 2026, in Pasay. The precipitation for the entire day is 0.0 mm."
+
+2026-01-16 23:40:15,154 - INFO - 127.0.0.1 - - [16/Jan/2026 23:40:15] "POST /api/chat HTTP/1.1" 200 -
